@@ -23,7 +23,14 @@ const signup = () => {
         //router.push('/login')
         } else {
             //show error message
-            document.querySelector('.message--error').style.display = 'block'
+            if(data.message.keyPattern.username === 1){
+                document.querySelector('.message--error').innerHTML = 'This email is already in use'
+                document.querySelector('.message--error').style.display = 'block'
+            }else{
+                document.querySelector('.message--error').innerHTML = 'Please fill in all fields'
+                document.querySelector('.message--error').style.display = 'block'
+            }
+            
             
         }
     })
@@ -36,7 +43,7 @@ const signup = () => {
 <template>
     <div class="form">
         <h1>Sign Up</h1>
-        <p class="message message--error">Please fill in all the fields</p>
+        <p class="message message--error"></p>
         <div class="inputGroup">
             <div class="input input--small">
                 <label class="input__label" for="firstName">First name</label>

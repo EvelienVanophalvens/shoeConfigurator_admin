@@ -3,7 +3,7 @@
 const signup = () => {
     console.log('signup')
     //post request to api: http://localhost:3000/api/v1/users
-    fetch ('http://localhost:3000/api/v1/users', {
+    fetch ('http://localhost:3000/api/v1/users/signup', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

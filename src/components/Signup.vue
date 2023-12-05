@@ -19,8 +19,11 @@ const signup = () => {
     .then(data => {
         console.log(data)
         if(data.status === 'success'){
-        
+        //redirect to login page with router link
+        //router.push('/login')
         } else {
+            //show error message
+            document.querySelector('.message--error').style.display = 'block'
             
         }
     })
@@ -33,7 +36,7 @@ const signup = () => {
 <template>
     <div class="form">
         <h1>Sign Up</h1>
-        <p class="message--error">Please fill in all the fields</p>
+        <p class="message message--error">Please fill in all the fields</p>
         <div class="inputGroup">
             <div class="input input--small">
                 <label class="input__label" for="firstName">First name</label>
@@ -102,6 +105,18 @@ const signup = () => {
     .input--btn {
         flex-direction: row;
         justify-content: end;
+    }
+
+    .message{
+        margin-bottom: 0px;
+        display: inline-block;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1em;
+        font-weight: bold;
+    }
+    .message--error{
+        color: red;
+        display: none;
     }
 
 </style>

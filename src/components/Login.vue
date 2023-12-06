@@ -1,8 +1,40 @@
-<script setup></script>
+<script setup>
+const login = () => {
+    fetch ('http://localhost:3000/api/v1/users/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+       if(data.status === 'success'){
+           //redirect to home page
+           //router.push('/')
+           let token = data.data.token;
+            localStorage.setItem('token', token);
+            document.querySelector('.message--error').style.display = 'none'
+       } else {
+           //show error message
+           document.querySelector('.message--error').innerHTML = 'Incorrect email or password'
+           document.querySelector('.message--error').style.display = 'block'
+       }
+            
+        
+    })
+
+    
+}
+</script>
 <template>
      <div class="form">
         <h1>Login</h1>
         <p>Don't have an account? <a href="#">Sign up</a></p>
+        <p class="message message--error"></p>
         <div class="input">
             <label class="input__label" for="email">Email</label>
             <input class="input__field" type="email" id="email" />
@@ -12,7 +44,7 @@
             <input class="input__field" type="password" id="password" />
         </div>
         <div class="input input--btn">
-            <button class="btn btn--small btn--primary">Login</button>
+            <button class="btn btn--small btn--primary" @click="login">Login</button>
         </div>
     </div>
 </template>
@@ -51,5 +83,18 @@
         flex-direction: row;
         justify-content: end;
     }
+
+    .message{
+        margin-bottom: 0px;
+        display: inline-block;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1em;
+        font-weight: bold;
+    }
+    .message--error{
+        color: red;
+        display: none;
+    }
+
 
 </style>

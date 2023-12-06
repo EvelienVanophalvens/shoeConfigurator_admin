@@ -22,6 +22,8 @@ const signup = () => {
         if(data.status === 'success'){
         //redirect to login page with router link
         //router.push('/login')
+        let token = data.data.token
+        localStorage.setItem('token', token);
         } else {
             //show error message
             if(data.message.keyPattern.username === 1){

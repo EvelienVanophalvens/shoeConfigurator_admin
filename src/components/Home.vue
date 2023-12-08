@@ -9,6 +9,7 @@ fetch("http://localhost:3000/api/v1/shoes", {
 }).then((result) => {
 }).then((json) => {
 }).catch((err) => {
+    router.push('/');
 });
 
 

@@ -7,7 +7,7 @@ import Login from './components/Login.vue'
 <template>
 
   <Nav />
-  <Login />
+  <router-view></router-view>
 
 </template>
 

@@ -4,11 +4,13 @@ import App from './App.vue'
 
 import Login from './components/Login.vue'
 import Signup from './components/Signup.vue'
+import Home from './components/Home.vue'
 import * as VueRouter from 'vue-router'
 
 const routes = [
     { path: '/', component: Login },
-    { path: '/Signup', component: Signup }
+    { path: '/Signup', component: Signup },
+    { path: '/Home', component: Home }
 ]
 
 const router = VueRouter.createRouter({

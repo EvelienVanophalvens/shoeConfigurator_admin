@@ -1,4 +1,8 @@
 <script setup>
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
+
 const login = () => {
     fetch ('http://localhost:3000/api/v1/users/login', {
         method: 'POST',
@@ -13,8 +17,7 @@ const login = () => {
     .then(response => response.json())
     .then(data => {
        if(data.status === 'success'){
-           //redirect to home page
-           //router.push('/')
+            router.push('/home');
            let token = data.data.token;
             localStorage.setItem('token', token);
             document.querySelector('.message--error').style.display = 'none'

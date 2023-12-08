@@ -1,9 +1,52 @@
 <script setup>
+
+const signup = () => {
+    console.log('signup')
+    //post request to api: http://localhost:3000/api/v1/users
+
+    fetch ('http://localhost:3000/api/v1/users/signup', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            firstname: document.getElementById('firstName').value,
+            lastname: document.getElementById('lastName').value,
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data)
+        if(data.status === 'success'){
+        //redirect to login page with router link
+        //router.push('/login')
+        let token = data.data.token
+        localStorage.setItem('token', token);
+        } else {
+            //show error message
+            if(data.message.keyPattern.username === 1){
+                document.querySelector('.message--error').innerHTML = 'This email is already in use'
+                document.querySelector('.message--error').style.display = 'block'
+            }else{
+                document.querySelector('.message--error').innerHTML = 'Please fill in all fields'
+                document.querySelector('.message--error').style.display = 'block'
+            }
+            
+            
+        }
+    })
+
+    
+}
+
 </script>
 
 <template>
     <div class="form">
         <h1>Sign Up</h1>
+        <p class="message message--error"></p>
         <div class="inputGroup">
             <div class="input input--small">
                 <label class="input__label" for="firstName">First name</label>
@@ -23,7 +66,7 @@
             <input class="input__field" type="password" id="password" />
         </div>
         <div class="input input--btn">
-            <button class="btn btn--small btn--primary">Sign up</button>
+            <button class="btn btn--small btn--primary" @click="signup">Sign up</button>
         </div>
     </div>
 </template>
@@ -72,6 +115,18 @@
     .input--btn {
         flex-direction: row;
         justify-content: end;
+    }
+
+    .message{
+        margin-bottom: 0px;
+        display: inline-block;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 1em;
+        font-weight: bold;
+    }
+    .message--error{
+        color: red;
+        display: none;
     }
 
 </style>

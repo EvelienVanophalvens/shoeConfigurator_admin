@@ -32,37 +32,55 @@
 </script>
 
 <template>
-    <div>
-        <h1>{{ data.shoeName }}</h1>
-        <h2>{{ data.shoeSize }}</h2>
-        <p>Material: {{ data.innerMaterial }}</p>
-        <h3>Colors:</h3>
-        <ul>
-            <li>Laces: {{ data.colorLaces }}</li>
-            <li>Inner Material: {{ data.colorInnerMaterial }}</li>
-            <li>Mid Material: {{ data.colorMidMaterial }}</li>
-            <li>Outer Material: {{ data.colorOuterMaterial }}</li>
-            <li>Outsole: {{ data.colorOutsole }}</li>
-            <li>Midsole: {{ data.colorMidsole }}</li>
-
-            <li>Outsole: {{ data.colorOutsole }}</li>
-        </ul>
-    </div>
-    <div>
-        <h2>{{ data.firstName}} {{ data.lastName }}</h2>
-        <ul>
-            <li>{{ data.email }}</li>
-            <li>{{ data.phoneNumber }}</li>
-            <li>{{ data.orderNumber }}</li>
-            <li>{{ formatDate(data.orderDate) }}</li>
-            <li>{{ data.status }}</li>
-            <li>{{ data.street }}</li>
-            <li>{{ data.houseNumber }}</li>
-            <li>{{ data.zipCode }}</li>
-            <li>{{ data.state }}</li>
-            <li>{{ data.city }}</li>
-        </ul>
+    <div class="container">
+        <div class="container__item">
+            <h1>{{ data.shoeName }}</h1>
+            <h2>{{ data.shoeSize }}</h2>
+            <p>Material: {{ data.innerMaterial }}</p>
+            <h3>Colors:</h3>
+            <ul class="container__item__list">
+                <li>Laces: {{ data.colorLaces }}</li>
+                <li>Inner Material: {{ data.colorInnerMaterial }}</li>
+                <li>Mid Material: {{ data.colorMidMaterial }}</li>
+                <li>Outer Material: {{ data.colorOuterMaterial }}</li>
+                <li>Outsole: {{ data.colorOutsole }}</li>
+                <li>Midsole: {{ data.colorMidsole }}</li>
+                <li>Outsole: {{ data.colorOutsole }}</li>
+            </ul>
+        </div>
+        <div class="container__item">
+            <h2>{{ data.firstName}} {{ data.lastName }}</h2>
+            <ul class="container__item__list">
+                <li>{{ data.email }}</li>
+                <li>{{ data.phoneNumber }}</li>
+                <li>{{ data.orderNumber }}</li>
+                <li>{{ formatDate(data.orderDate) }}</li>
+                <li>{{ data.status }}</li>
+                <li>{{ data.street }} {{ data.houseNumber }}</li>
+                <li>{{ data.zipCode }}</li>
+                <li>{{ data.city }}</li>
+                <li>{{ data.state }}</li>
+                <li>{{ data.country }}</li>
+            </ul>
+        </div>
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+    .container{
+        width: 90%;
+        margin: 64px auto 64px auto ;
+        padding: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 32px;
+    }
+    .container__item{
+        border: 1px solid black;
+        padding: 16px;
+    }
+    .container__item__list{
+        list-style: none;
+        padding: 0;
+    }
+</style>

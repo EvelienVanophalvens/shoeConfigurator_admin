@@ -46,8 +46,8 @@ fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
         padding: 0;
         list-style: none;
     }
-    .table__row:first-child{
-        border-bottom: none;
+    .table__row:not(:only-child):first-child {
+    border-bottom: none;
     }
     .table__row{
         display: flex;

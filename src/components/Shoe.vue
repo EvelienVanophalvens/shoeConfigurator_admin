@@ -56,6 +56,7 @@
                 <li>{{ data.orderNumber }}</li>
                 <li>{{ formatDate(data.orderDate) }}</li>
                 <li>{{ data.status }}</li>
+                <div class="spacer"></div>
                 <li>{{ data.street }} {{ data.houseNumber }}</li>
                 <li>{{ data.zipCode }}</li>
                 <li>{{ data.city }}</li>
@@ -82,5 +83,8 @@
     .container__item__list{
         list-style: none;
         padding: 0;
+    }
+    .spacer{
+        height: 24px;
     }
 </style>

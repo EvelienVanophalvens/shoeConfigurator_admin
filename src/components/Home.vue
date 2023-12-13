@@ -4,7 +4,7 @@ import { ref } from 'vue'
 const router = useRouter()
 const data = ref([]);
 
-fetch("http://localhost:3000/api/v1/shoes", {
+fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
   headers: {
     "Authorization": "Bearer " + localStorage.getItem('token'),
   },  
@@ -16,8 +16,6 @@ fetch("http://localhost:3000/api/v1/shoes", {
 }).catch((err) => {
     router.push('/');
 });
-
-
 </script>
 <template>
   <ul class="table">
@@ -34,11 +32,11 @@ fetch("http://localhost:3000/api/v1/shoes", {
       <div class="table__row__item">
         {{shoe.shoeSize}}
       </div>
-      <div class="btn btn--small btn--primary">  <a class="btn__link" href="/shoe/{{shoe._id}}">View</a></div>
-    
+      <div class="btn btn--small btn--primary">
+        <a class="btn__link" :href="'Shoe?id=' + shoe._id">View</a>
+      </div>
     </li>
   </ul>
-
 </template>
 <style scoped>
 
@@ -64,7 +62,6 @@ fetch("http://localhost:3000/api/v1/shoes", {
         text-align: center;
         line-height: 45px;
     }
-
     .btn--primary{
         background-color: var(--primary-color);
         border: none;

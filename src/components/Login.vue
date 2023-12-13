@@ -4,7 +4,7 @@ const router = useRouter()
 
 
 const login = () => {
-    fetch ('http://localhost:3000/api/v1/users/login', {
+    fetch ('https://shoeconfigurator.onrender.com/api/v1/users/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -26,11 +26,7 @@ const login = () => {
            document.querySelector('.message--error').innerHTML = 'Incorrect email or password'
            document.querySelector('.message--error').style.display = 'block'
        }
-            
-        
     })
-
-    
 }
 </script>
 <template>

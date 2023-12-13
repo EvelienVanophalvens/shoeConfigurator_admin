@@ -13,7 +13,6 @@ fetch("http://localhost:3000/api/v1/shoes", {
 }).then((json) => {
     console.log(json)
     data.value = json.data[0].shoes;
-
 }).catch((err) => {
     router.push('/');
 });

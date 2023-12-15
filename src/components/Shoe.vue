@@ -5,7 +5,8 @@
     const data = ref([]);
     const urlParams = new URLSearchParams(window.location.search);
     const router = useRouter()
-    let newStage = "";
+    let newStage = ref("");
+    let update = ref("");
     const fetchurl = "https://shoeconfigurator.onrender.com/api/v1/shoes/" + urlParams.get('id');
     fetch(fetchurl, {
         headers: {
@@ -31,36 +32,55 @@
     }
     const updateStage = (newStage) => {
         //put new stage through api
-        console.log(newStage);
-        
+        fetch(fetchurl, {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem('token'),
+            },
+            body: JSON.stringify({
+                status: newStage
+            })
+        })
+        .then(response => response.json())
+        .then(data =>{
+            console.log(data);
+            update.value = "Order updated to: <b>" + newStage + "</b>";
+            console.log(data);
+            console.log(update.value);
+        })
+        .catch(err => {
+            console.log(err);
+            update.value = "Something went wrong";
+        })
     }
     const nextStage = (currentstage) => {
         if(currentstage === 'pending'){
-            newStage = 'processing';
-            updateStage(newStage);
+            newStage.value = 'processing';
+            updateStage(newStage.value);
             return 'processing';
         } else if(currentstage === 'processing'){
-            newStage = 'shipped';
-            updateStage(newStage);
+            newStage.value = 'shipped';
+            updateStage(newStage.value);
             return 'shipped';
         } else if(currentstage === 'shipped'){
-            newStage = 'delivered';
-            updateStage(newStage);
+            newStage.value = 'delivered';
+            updateStage(newStage.value);
             return 'delivered';
         }
     }
     const previousStage = (currentstage) => {
         if(currentstage === 'processing'){
-            newStage = 'pending';
-            updateStage(newStage);
+            newStage.value = 'pending';
+            updateStage(newStage.value);
             return 'pending';
         } else if(currentstage === 'shipped'){
-            newStage = 'processing';
-            updateStage(newStage);
+            newStage.value = 'processing';
+            updateStage(newStage.value);
             return 'processing';
         } else if(currentstage === 'delivered'){
-            newStage = 'shipped';
-            updateStage(newStage);
+            newStage.value = 'shipped';
+            updateStage(newStage.value);
             return 'shipped';
         }
     
@@ -99,6 +119,7 @@
                 <li>{{ data.country }}</li>
                 <li><div class="btn--medium btn--primary" @click="previousStage(data.status)">Previous order stage</div></li>
                 <li><div class="btn--medium btn--primary" @click="nextStage(data.status)">Next order stage</div></li>
+                <li><p>{{ update }}</p></li>
             </ul>
         </div>
     </div>

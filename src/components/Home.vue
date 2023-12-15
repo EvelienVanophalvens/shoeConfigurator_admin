@@ -18,8 +18,10 @@ fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
 });
 </script>
 <template>
-  <ul class="table">
-    <li class="table__row" v-for="shoe in data">
+  <h1>Orders</h1>
+  <h2>Pending</h2>
+  <ul class="table" v-for="shoe in data">
+    <li class="table__row" v-if="shoe.status === 'pending'">
       <div class="table__row__item">
         {{shoe.orderNumber}}
       </div>
@@ -37,6 +39,66 @@ fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
       </div>
     </li>
   </ul>
+  <h2>Processing</h2>
+    <ul class="table" v-for="shoe in data">
+      <li class="table__row" v-if="shoe.status === 'processing'">
+        <div class="table__row__item">
+          {{shoe.orderNumber}}
+        </div>
+        <div class="table__row__item">
+          {{shoe.firstName}}
+        </div>
+        <div class="table__row__item">
+          {{shoe.shoeName}}
+        </div>
+        <div class="table__row__item">
+          {{shoe.shoeSize}}
+        </div>
+        <div class="btn btn--small btn--primary">
+          <a class="btn__link" :href="'Shoe?id=' + shoe._id">View</a>
+        </div>
+      </li>
+    </ul>
+  <h2>Shipped</h2>
+    <ul class="table" v-for="shoe in data">
+      <li class="table__row" v-if="shoe.status === 'shipped'">
+        <div class="table__row__item">
+          {{shoe.orderNumber}}
+        </div>
+        <div class="table__row__item">
+          {{shoe.firstName}}
+        </div>
+        <div class="table__row__item">
+          {{shoe.shoeName}}
+        </div>
+        <div class="table__row__item">
+          {{shoe.shoeSize}}
+        </div>
+        <div class="btn btn--small btn--primary">
+          <a class="btn__link" :href="'Shoe?id=' + shoe._id">View</a>
+        </div>
+      </li>
+    </ul>
+  <h2>Delivered</h2>
+    <ul class="table" v-for="shoe in data">
+      <li class="table__row" v-if="shoe.status === 'delivered'">
+        <div class="table__row__item">
+          {{shoe.orderNumber}}
+        </div>
+        <div class="table__row__item">
+          {{shoe.firstName}}
+        </div>
+        <div class="table__row__item">
+          {{shoe.shoeName}}
+        </div>
+        <div class="table__row__item">
+          {{shoe.shoeSize}}
+        </div>
+        <div class="btn btn--small btn--primary">
+          <a class="btn__link" :href="'Shoe?id=' + shoe._id">View</a>
+        </div>
+      </li>
+    </ul>
 </template>
 <style scoped>
 
@@ -45,6 +107,9 @@ fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
         margin: 64px auto 64px auto ;
         padding: 0;
         list-style: none;
+    }
+    h1, h2{
+        margin-left: 28px;
     }
     .table__row:not(:only-child):first-child {
     border-bottom: none;

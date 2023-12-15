@@ -39,13 +39,12 @@
             <p>Material: {{ data.innerMaterial }}</p>
             <h3>Colors:</h3>
             <ul class="container__item__list">
-                <li>Laces: {{ data.colorLaces }}</li>
-                <li>Inner Material: {{ data.colorInnerMaterial }}</li>
-                <li>Mid Material: {{ data.colorMidMaterial }}</li>
-                <li>Outer Material: {{ data.colorOuterMaterial }}</li>
-                <li>Outsole: {{ data.colorOutsole }}</li>
-                <li>Midsole: {{ data.colorMidsole }}</li>
-                <li>Outsole: {{ data.colorOutsole }}</li>
+                <div class="container__item__list__item"><p>Laces: </p><div class="colorbox" :style="{ backgroundColor: '#' + data.colorLaces }"></div><p>#{{ data.colorLaces }}</p></div>
+                <div class="container__item__list__item"><p>Inner Material: </p><div class="colorbox" :style="{ backgroundColor: '#' + data.colorInnerMaterial }"></div><p>#{{ data.colorInnerMaterial }}</p></div>
+                <div class="container__item__list__item"><p>Mid Material: </p><div class="colorbox" :style="{ backgroundColor: '#' + data.colorMidMaterial }"></div><p>#{{ data.colorMidMaterial }}</p></div>
+                <div class="container__item__list__item"><p>Outer Material: </p><div class="colorbox" :style="{ backgroundColor: '#' + data.colorOuterMaterial }"></div><p>#{{ data.colorOuterMaterial }}</p></div>
+                <div class="container__item__list__item"><p>Midsole: </p><div class="colorbox" :style="{ backgroundColor: '#' + data.colorMidsole }"></div><p>#{{ data.colorMidsole }}</p></div>
+                <div class="container__item__list__item"><p>Outsole: </p><div class="colorbox" :style="{ backgroundColor: '#' + data.colorOutsole }"></div><p>#{{ data.colorOutsole }}</p></div>
             </ul>
         </div>
         <div class="container__item">
@@ -86,5 +85,16 @@
     }
     .spacer{
         height: 24px;
+    }
+    .container__item__list__item{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+
+        
+    }
+    .colorbox{
+        width: 100px;
+        height: 24px;
+        margin-top: 14px;
     }
 </style>

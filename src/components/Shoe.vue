@@ -5,7 +5,7 @@
     const data = ref([]);
     const urlParams = new URLSearchParams(window.location.search);
     const router = useRouter()
-
+    let newStage = "";
     const fetchurl = "https://shoeconfigurator.onrender.com/api/v1/shoes/" + urlParams.get('id');
     fetch(fetchurl, {
         headers: {
@@ -29,13 +29,49 @@
 
       return `${day}-${month}-${year} - ${hours}:${minutes}`;
     }
+    const updateStage = (newStage) => {
+        //put new stage through api
+        console.log(newStage);
+        
+    }
+    const nextStage = (currentstage) => {
+        if(currentstage === 'pending'){
+            newStage = 'processing';
+            updateStage(newStage);
+            return 'processing';
+        } else if(currentstage === 'processing'){
+            newStage = 'shipped';
+            updateStage(newStage);
+            return 'shipped';
+        } else if(currentstage === 'shipped'){
+            newStage = 'delivered';
+            updateStage(newStage);
+            return 'delivered';
+        }
+    }
+    const previousStage = (currentstage) => {
+        if(currentstage === 'processing'){
+            newStage = 'pending';
+            updateStage(newStage);
+            return 'pending';
+        } else if(currentstage === 'shipped'){
+            newStage = 'processing';
+            updateStage(newStage);
+            return 'processing';
+        } else if(currentstage === 'delivered'){
+            newStage = 'shipped';
+            updateStage(newStage);
+            return 'shipped';
+        }
+    
+    }
 </script>
 
 <template>
     <div class="container">
         <div class="container__item">
             <h1>{{ data.shoeName }}</h1>
-            <h2>{{ data.shoeSize }}</h2>
+            <h2>Size: {{ data.shoeSize }}</h2>
             <p>Material: {{ data.innerMaterial }}</p>
             <h3>Colors:</h3>
             <ul class="container__item__list">
@@ -61,6 +97,8 @@
                 <li>{{ data.city }}</li>
                 <li>{{ data.state }}</li>
                 <li>{{ data.country }}</li>
+                <li><div class="btn--medium btn--primary" @click="previousStage(data.status)">Previous order stage</div></li>
+                <li><div class="btn--medium btn--primary" @click="nextStage(data.status)">Next order stage</div></li>
             </ul>
         </div>
     </div>
@@ -89,12 +127,26 @@
     .container__item__list__item{
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
-
-        
     }
     .colorbox{
         width: 100px;
         height: 24px;
         margin-top: 14px;
+    }
+    .btn--medium{
+        width: 200px;
+        height: 45px;
+        text-align: center;
+        line-height: 45px;
+        margin-top: 20px;
+    }
+    .btn--primary{
+        background-color: var(--primary-color);
+        border: none;
+        color: black;
+    }
+    .btn--medium:hover{
+        background-color: var(--primary-color-hover);
+        cursor: pointer;
     }
 </style>

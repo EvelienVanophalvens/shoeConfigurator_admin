@@ -44,7 +44,7 @@ const updateStage = (newStage) => {
         .then(response => response.json())
         .then(data => {
             console.log(data);
-            update.value = "Order updated to: <b>" + newStage + "</b>";
+            update.value = "Order updated to: " + newStage;
             console.log(data);
             console.log(update.value);
         })

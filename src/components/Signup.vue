@@ -1,10 +1,11 @@
 <script setup>
+import { useRouter } from 'vue-router'
+const router = useRouter()
 
 const signup = () => {
     console.log('signup')
     //post request to api: http://localhost:3000/api/v1/users
-
-    fetch ('http://localhost:3000/api/v1/users/signup', {
+    fetch ('https://shoeconfigurator.onrender.com/api/v1/users/signup', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -21,7 +22,7 @@ const signup = () => {
         console.log(data)
         if(data.status === 'success'){
         //redirect to login page with router link
-        //router.push('/login')
+        router.push('/')
         let token = data.data.token
         localStorage.setItem('token', token);
         } else {

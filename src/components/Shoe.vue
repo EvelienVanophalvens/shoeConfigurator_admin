@@ -16,7 +16,6 @@
         return result.json();
     }).then((json) => {
         data.value = json.data[0].shoe;
-        console.log(data.value);
     }).catch((err) => {
         console.log(err);
     });
@@ -85,6 +84,10 @@
         }
     
     }
+    const removeShoe = () =>{
+        const removeShoe = data.value._id;
+        console.log(removeShoe);
+    }
 </script>
 
 <template>
@@ -119,6 +122,7 @@
                 <li>{{ data.country }}</li>
                 <li><div class="btn--medium btn--primary" @click="previousStage(data.status)">Previous order stage</div></li>
                 <li><div class="btn--medium btn--primary" @click="nextStage(data.status)">Next order stage</div></li>
+                <li><div class="btn--medium btn--primary btn--red" @click="removeShoe()">Remove shoe</div></li>
                 <li><p>{{ update }}</p></li>
             </ul>
         </div>
@@ -168,6 +172,14 @@
     }
     .btn--medium:hover{
         background-color: var(--primary-color-hover);
+        cursor: pointer;
+    }
+    .btn--red{
+        background-color: var(--red-color);
+        color: white;
+    }
+    .btn--red:hover{
+        background-color: var(--red-color-hover);
         cursor: pointer;
     }
 </style>

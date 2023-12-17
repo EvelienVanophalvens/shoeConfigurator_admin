@@ -1,8 +1,16 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
 const router = useRouter()
 const data = ref([]);
+let socket = null;
+
+onMounted(() => {
+  socket = new WebSocket('wss://shoeconfigurator.onrender.com/primus');
+  socket.addEventListener('open', function (event) {
+    console.log('connected');
+  });
+});
 
 fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
   headers: {

@@ -146,11 +146,11 @@ const removeShoe = () => {
         <div class="container__item">
             <h2>{{ data.firstName }} {{ data.lastName }}</h2>
             <ul class="container__item__list">
-                <li>{{ data.email }}</li>
-                <li>{{ data.phoneNumber }}</li>
-                <li>{{ data.orderNumber }}</li>
-                <li>{{ formatDate(data.orderDate) }}</li>
-                <li>{{ data.status }}</li>
+                <li>Email: {{ data.email }}</li>
+                <li>Phone number: {{ data.phoneNumber }}</li>
+                <li>Order number: {{ data.orderNumber }}</li>
+                <li>Order date: {{ formatDate(data.orderDate) }}</li>
+                <li>Order Status: {{ data.status }}</li>
                 <div class="spacer"></div>
                 <li>{{ data.street }} {{ data.houseNumber }}</li>
                 <li>{{ data.zipCode }}</li>

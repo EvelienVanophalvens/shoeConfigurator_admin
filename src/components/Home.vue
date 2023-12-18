@@ -14,14 +14,10 @@ onMounted(() => {
   
   socket.onmessage = (event) => {
   //push new data to data.value
-  console.log(event.data);
   let newShoe = JSON.parse(event.data);
   data.value.push(newShoe);
-  console.log(data.value);
   if (newShoe === 'ping'){
-    console.log('ping');
     if (socket.readyState === WebSocket.OPEN) {
-      console.log('pong');
     socket.send('pong');
   }
   }
@@ -39,6 +35,86 @@ fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
 }).catch((err) => {
     router.push('/');
 });
+
+
+let newStage = ref("");
+let update = ref("");
+const updateStage = (newStage, shoeid) => {
+    const fetchurl = "https://shoeconfigurator.onrender.com/api/v1/shoes/" + shoeid;
+    //put new stage through api
+    fetch(fetchurl, {
+        method: 'PATCH',
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + localStorage.getItem('token'),
+        },
+        body: JSON.stringify({
+            status: newStage
+        })
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            update.value = "Order updated to: " + newStage;
+            console.log(data);
+            console.log(update.value);
+            location.reload();
+        })
+        .catch(err => {
+            console.log(err);
+            update.value = "Something went wrong";
+        })
+}
+const nextStage = (currentstage, shoeid) => {
+    if (currentstage === 'pending') {
+        newStage.value = 'processing';
+        updateStage(newStage.value, shoeid);
+        return 'processing';
+    } else if (currentstage === 'processing') {
+        newStage.value = 'shipped';
+        updateStage(newStage.value, shoeid);
+        return 'shipped';
+    } else if (currentstage === 'shipped') {
+        newStage.value = 'delivered';
+        updateStage(newStage.value, shoeid);
+        return 'delivered';
+    }
+}
+const previousStage = (currentstage, shoeid) => {
+    if (currentstage === 'processing') {
+        newStage.value = 'pending';
+        updateStage(newStage.value, shoeid);
+        return 'pending';
+    } else if (currentstage === 'shipped') {
+        newStage.value = 'processing';
+        updateStage(newStage.value, shoeid);
+        return 'processing';
+    } else if (currentstage === 'delivered') {
+        newStage.value = 'shipped';
+        updateStage(newStage.value, shoeid);
+        return 'shipped';
+    }
+}
+const removeShoe = (shoeid) => {
+    const fetchurl = "https://shoeconfigurator.onrender.com/api/v1/shoes/" + shoeid;
+    fetch(fetchurl, {
+        method: 'DELETE',
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + localStorage.getItem('token'),
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .then(() => {
+          location.reload();
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+}
 </script>
 <template>
   <h1>Orders</h1>
@@ -58,6 +134,8 @@ fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
         <div class="table__row__item">
           {{shoe.shoeSize}}
         </div>
+        <a class="btn btn--small btn--red btn__link " @click="removeShoe(shoe._id)">Cancel order</a>
+        <a class="btn btn--small btn--blue btn__link" @click="nextStage(shoe.status, shoe._id)">Next stage</a>
         <a class="btn btn--small btn--primary btn__link" :href="'Shoe?id=' + shoe._id">View</a>
       </li>
     </ul>
@@ -78,6 +156,8 @@ fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
         <div class="table__row__item">
           {{shoe.shoeSize}}
         </div>
+        <a class="btn btn--small btn--blue btn__link " @click="previousStage(shoe.status, shoe._id)">Previous Stage</a>
+        <a class="btn btn--small btn--blue btn__link" @click="nextStage(shoe.status, shoe._id)">Next stage</a>
         <a class="btn btn--small btn--primary btn__link" :href="'Shoe?id=' + shoe._id">View</a>
       </li>
     </ul>
@@ -98,6 +178,8 @@ fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
         <div class="table__row__item">
           {{shoe.shoeSize}}
         </div>
+        <a class="btn btn--small btn--blue btn__link " @click="previousStage(shoe.status, shoe._id)">Previous Stage</a>
+        <a class="btn btn--small btn--blue btn__link" @click="nextStage(shoe.status, shoe._id)">Next stage</a>
         <a class="btn btn--small btn--primary btn__link" :href="'Shoe?id=' + shoe._id">View</a>
       </li>
     </ul>
@@ -118,6 +200,8 @@ fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
         <div class="table__row__item">
           {{shoe.shoeSize}}
         </div>
+        <a class="btn btn--small btn--blue btn__link " @click="previousStage(shoe.status, shoe._id)">Previous Stage</a>
+        <a class="btn btn--small btn--blue btn__link" @click="nextStage(shoe.status, shoe._id)">Next stage</a>
         <a class="btn btn--small btn--primary btn__link" :href="'Shoe?id=' + shoe._id">View</a>
       </li>
     </ul>
@@ -148,7 +232,7 @@ fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
     }
     .table__row{
         display: grid;
-        grid-template-columns: 100px 100px 150px 50px 100px;
+        grid-template-columns: 10% 10% 15% 5% 17% 17% 17%;
         padding: 12px 16px;
         align-items: center;
     }
@@ -176,6 +260,32 @@ fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
     .btn--primary:hover{
         background-color: var(--primary-color-hover);
         cursor: pointer;
+    }
+    .btn--red{
+        background-color: var(--red-color);
+        color: white;
+    }
+    .btn--red:hover{
+        background-color: var(--red-color-hover);
+        cursor: pointer;
+        color: white;
+    }
+    .btn--blue{
+        background-color: var(--blue-color);
+        color: white;
+    }
+    .btn--blue:hover{
+        background-color: var(--blue-color-hover);
+        cursor: pointer;
+        color: white;
+    }
+    @media screen and (max-width: 930px){
+      .btn--blue{
+        display: none;
+      }
+      .btn--red{
+        display: none;
+      }
     }
     @media screen and (max-width: 690px) {
       .table__row{

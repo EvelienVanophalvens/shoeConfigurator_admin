@@ -1,8 +1,10 @@
 :root{
     --primary-color: #D6FF38;
     --primary-color-hover: #C1F300;
-    --red-color: #FF0000;
-    --red-color-hover: #E60000;
+    --red-color: #ff4848;
+    --red-color-hover: #fa3737;
+    --blue-color: #6363fe;
+    --blue-color-hover: #4c4cf8;
 }
 
 body{

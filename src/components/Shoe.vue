@@ -47,6 +47,9 @@ const updateStage = (newStage) => {
             update.value = "Order updated to: " + newStage;
             console.log(data);
             console.log(update.value);
+            setTimeout(() => {
+                router.push('/home');
+        }, 2000);
         })
         .catch(err => {
             console.log(err);
@@ -82,15 +85,11 @@ const previousStage = (currentstage) => {
         updateStage(newStage.value);
         return 'shipped';
     }
-    }
-    const removeShoe = () =>{
-        const removeShoe = data.value._id;
-        console.log(removeShoe);
-    }
-    const goBack = () => {
-        //go back to home page
-        router.push('/home');
-    }
+}
+const goBack = () => {
+    //go back to home page
+    router.push('/home');
+}
 const removeShoe = () => {
     fetch(fetchurl, {
         method: 'DELETE',

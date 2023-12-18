@@ -1,13 +1,12 @@
 <script setup>
     import { useRouter } from 'vue-router'
-    import { ref, defineEmits } from 'vue'
+    import { ref } from 'vue'
 
     const data = ref([]);
     const urlParams = new URLSearchParams(window.location.search);
     const router = useRouter()
     let newStage = ref("");
     let update = ref("");
-
     const fetchurl = "https://shoeconfigurator.onrender.com/api/v1/shoes/" + urlParams.get('id');
     fetch(fetchurl, {
         headers: {
@@ -30,7 +29,7 @@
 
       return `${day}-${month}-${year} - ${hours}:${minutes}`;
     }
-    const updateStage = (newStage, emit) => {
+    const updateStage = (newStage) => {
         //put new stage through api
         fetch(fetchurl, {
             method: 'PATCH',
@@ -45,8 +44,9 @@
         .then(response => response.json())
         .then(data =>{
             console.log(data);
-            update.value = "Order updated to: " + newStage;
-            updateStatus();
+            update.value = "Order updated to: <b>" + newStage + "</b>";
+            console.log(data);
+            console.log(update.value);
         })
         .catch(err => {
             console.log(err);
@@ -68,14 +68,6 @@
             return 'delivered';
         }
     }
-    const updateStatus = () => {
-        // go to home page after 5 seconds
-        setTimeout(() => {
-            router.push('/home');
-        }, 1000);
-    }
-
-
     const previousStage = (currentstage) => {
         if(currentstage === 'processing'){
             newStage.value = 'pending';
@@ -143,8 +135,9 @@
         margin: 64px auto 64px auto ;
         padding: 0;
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-gap: 32px;
+        grid-column-gap: 10%;
+        grid-row-gap: 11.1%;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 45%));
     }
     .container__item{
         border: 1px solid black;

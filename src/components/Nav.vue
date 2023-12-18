@@ -1,7 +1,9 @@
 <script setup>
     import { useRouter } from 'vue-router'
-    import { ref } from 'vue'
+    import { onMounted, ref, watchEffect } from 'vue'
     const router = useRouter()
+    let hasToken = ref(false);
+
     const logout = () => {
         localStorage.removeItem('token');
         router.push('/');

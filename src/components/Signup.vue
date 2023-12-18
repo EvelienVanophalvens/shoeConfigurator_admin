@@ -96,8 +96,19 @@ const signup = () => {
         width: 650px;
         margin: 0 auto;
         margin-top: 200px;
+        animation: scale-up 0.8s ease-in-out;
     }
-
+    @keyframes scale-up {
+        0% {
+        transform: scale(0);
+        }
+        85% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
     .inputGroup{
         display: flex;
         justify-content: space-between;

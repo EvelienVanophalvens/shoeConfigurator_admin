@@ -1,13 +1,12 @@
 <script setup>
     import { useRouter } from 'vue-router'
-    import { ref, defineEmits } from 'vue'
+    import { ref } from 'vue'
 
     const data = ref([]);
     const urlParams = new URLSearchParams(window.location.search);
     const router = useRouter()
     let newStage = ref("");
     let update = ref("");
-
     const fetchurl = "https://shoeconfigurator.onrender.com/api/v1/shoes/" + urlParams.get('id');
     fetch(fetchurl, {
         headers: {
@@ -30,7 +29,7 @@
 
       return `${day}-${month}-${year} - ${hours}:${minutes}`;
     }
-    const updateStage = (newStage, emit) => {
+    const updateStage = (newStage) => {
         //put new stage through api
         fetch(fetchurl, {
             method: 'PATCH',
@@ -45,8 +44,9 @@
         .then(response => response.json())
         .then(data =>{
             console.log(data);
-            update.value = "Order updated to: " + newStage;
-            updateStatus();
+            update.value = "Order updated to: <b>" + newStage + "</b>";
+            console.log(data);
+            console.log(update.value);
         })
         .catch(err => {
             console.log(err);
@@ -68,14 +68,6 @@
             return 'delivered';
         }
     }
-    const updateStatus = () => {
-        // go to home page after 5 seconds
-        setTimeout(() => {
-            router.push('/home');
-        }, 1000);
-    }
-
-
     const previousStage = (currentstage) => {
         if(currentstage === 'processing'){
             newStage.value = 'pending';
@@ -96,9 +88,14 @@
         const removeShoe = data.value._id;
         console.log(removeShoe);
     }
+    const goBack = () => {
+        //go back to home page
+        router.push('/home');
+    }
 </script>
 
 <template>
+    <svg @click="goBack" class="icon icon--closeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
     <div class="container">
         <div class="container__item">
             <h1>{{ data.shoeName }}</h1>
@@ -143,8 +140,9 @@
         margin: 64px auto 64px auto ;
         padding: 0;
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-gap: 32px;
+        grid-column-gap: 10%;
+        grid-row-gap: 11.1%;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 45%));
     }
     .container__item{
         border: 1px solid black;
@@ -188,6 +186,17 @@
     }
     .btn--red:hover{
         background-color: var(--red-color-hover);
+        cursor: pointer;
+    }
+    .icon{
+        width: 44px;
+        height: 44px;
+    }
+    .icon--closeIcon{
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        fill: black;
         cursor: pointer;
     }
 </style>

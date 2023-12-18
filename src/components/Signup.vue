@@ -55,20 +55,20 @@ const signup = () => {
                 <div class="inputGroup">
                     <div class="input input--small">
                         <label class="input__label" for="firstName">First name</label>
-                        <input class="input__field" type="text" id="firstName" />
+                        <input class="input__field" autocapitalize="off" autocorrect="off" type="text" id="firstName" required />
                     </div>
                     <div class="input input--small">
                         <label class="input__label" for="lastName">Last name</label>
-                        <input class="input__field" type="text" id="lastName" />
+                        <input class="input__field" autocapitalize="off" autocorrect="off" type="text" id="lastName" required />
                     </div>
                 </div>
                 <div class="input">
                     <label class="input__label" for="email">Email</label>
-                    <input class="input__field" type="email" id="email" />
+                    <input class="input__field" autocapitalize="off" autocorrect="off" type="email" id="email" required />
                 </div>
                 <div class="input">
                     <label class="input__label" for="password">Password</label>
-                    <input class="input__field" type="password" id="password" />
+                    <input class="input__field" autocapitalize="off" autocorrect="off" type="password" id="password" required />
                 </div>
                 <div class="input input--btn">
                     <button class="btn btn--small btn--primary" type="submit">Sign up</button>

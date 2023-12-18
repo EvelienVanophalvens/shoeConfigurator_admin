@@ -30,28 +30,51 @@ const login = () => {
 }
 </script>
 <template>
-     <form @submit.prevent="login" class="form">
-        <h1>Login</h1>
-        <p>Don't have an account? <a href="/Signup">Sign up</a></p>
-        <p class="message message--error"></p>
-        <div class="input">
-            <label class="input__label" for="email">Email</label>
-            <input class="input__field" type="email" id="email" />
+    <div class="body">
+        <div class="formwrapper">
+            <form @submit.prevent="login" class="form">
+                <h1>Login</h1>
+                <p>Don't have an account? <a href="/Signup">Sign up</a></p>
+                <p class="message message--error"></p>
+                <div class="input">
+                    <label class="input__label" for="email">Email</label>
+                    <input class="input__field" type="email" id="email" />
+                </div>
+                <div class="input">
+                    <label class="input__label" for="password">Password</label>
+                    <input class="input__field" type="password" id="password" />
+                </div>
+                <div class="input input--btn">
+                    <button type="submit" class="btn btn--small btn--primary">Login</button>
+                </div>
+            </form>
         </div>
-        <div class="input">
-            <label class="input__label" for="password">Password</label>
-            <input class="input__field" type="password" id="password" />
-        </div>
-        <div class="input input--btn">
-            <button type="submit" class="btn btn--small btn--primary">Login</button>
-        </div>
-    </form>
+    </div>
 </template>
 <style scoped>
+    div.body{
+        position: absolute;
+        background-image: url('../assets/background.png');
+        height: 100vh;
+        width: 100vw;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+    .formwrapper{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: radial-gradient(rgb(0, 0, 0) 30%, rgba(0, 0, 0, 0));
+    }
     .form{
+        color: white;
         padding: 20px;
         width: 650px;
         margin: 0 auto;
+        margin-top: 200px;
     }
     .input{
         margin: 32px 0 0 0;
@@ -66,7 +89,7 @@ const login = () => {
 
     .input__field{
         padding: 10px;
-        border: 1px solid black;
+        border: 1px solid white;
     }
     .btn--small{
         width: 120px;
@@ -96,6 +119,14 @@ const login = () => {
     .message--error{
         color: red;
         display: none;
+    }
+    a{
+        color: white;
+        text-decoration: none;
+    }
+    a:hover{
+        color: white;
+        text-decoration: underline;
     }
 
 

@@ -45,38 +45,62 @@ const signup = () => {
 </script>
 
 <template>
-    <div class="form">
-        <h1>Sign Up</h1>
-        <p class="message message--error"></p>
-        <div class="inputGroup">
-            <div class="input input--small">
-                <label class="input__label" for="firstName">First name</label>
-                <input class="input__field" type="text" id="firstName" />
-            </div>
-            <div class="input input--small">
-                <label class="input__label" for="lastName">Last name</label>
-                <input class="input__field" type="text" id="lastName" />
-            </div>
-        </div>
-        <div class="input">
-            <label class="input__label" for="email">Email</label>
-            <input class="input__field" type="email" id="email" />
-        </div>
-        <div class="input">
-            <label class="input__label" for="password">Password</label>
-            <input class="input__field" type="password" id="password" />
-        </div>
-        <div class="input input--btn">
-            <button class="btn btn--small btn--primary" @click="signup">Sign up</button>
+    <div class="body">
+        <div class="formwrapper">
+            <form @submit.prevent="signup" class="form">
+                <h1>Sign Up</h1>
+                <p>Already have an account? <a href="/">Log in</a></p>
+                <p class="message message--error"></p>
+                <div class="inputGroup">
+                    <div class="input input--small">
+                        <label class="input__label" for="firstName">First name</label>
+                        <input class="input__field" type="text" id="firstName" />
+                    </div>
+                    <div class="input input--small">
+                        <label class="input__label" for="lastName">Last name</label>
+                        <input class="input__field" type="text" id="lastName" />
+                    </div>
+                </div>
+                <div class="input">
+                    <label class="input__label" for="email">Email</label>
+                    <input class="input__field" type="email" id="email" />
+                </div>
+                <div class="input">
+                    <label class="input__label" for="password">Password</label>
+                    <input class="input__field" type="password" id="password" />
+                </div>
+                <div class="input input--btn">
+                    <button class="btn btn--small btn--primary" type="submit">Sign up</button>
+                </div>
+            </form>
         </div>
     </div>
 </template>
 
 <style scoped>
+    div.body{
+        position: absolute;
+        background-image: url('../assets/background.png');
+        height: 100vh;
+        width: 100vw;
+        top: 0;
+        left: 0;
+        z-index: -1;
+    }
+    .formwrapper{
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: radial-gradient(rgb(0, 0, 0) 30%, rgba(0, 0, 0, 0));
+    }
     .form{
+        color: white;
         padding: 20px;
         width: 650px;
         margin: 0 auto;
+        margin-top: 200px;
     }
 
     .inputGroup{
@@ -128,6 +152,14 @@ const signup = () => {
     .message--error{
         color: red;
         display: none;
+    }
+    a{
+        color: white;
+        text-decoration: none;
+    }
+    a:hover{
+        color: white;
+        text-decoration: underline;
     }
 
 </style>

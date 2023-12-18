@@ -154,16 +154,22 @@ const removeShoe = () => {
             </div>
             <div class="container__item">
                 <h2>{{ data.firstName }} {{ data.lastName }}</h2>
-                <ul class="container__item__list">
-                    <li>Email: {{ data.email }}</li>
-                    <li>Phone number: {{ data.phoneNumber }}</li>
-                    <li>Order number: {{ data.orderNumber }}</li>
-                    <li>Order date: {{ formatDate(data.orderDate) }}</li>
-                    <li>Order Status: {{ data.status }}</li>
+                <ul class="container__item__list grid">
+                    <li>Email:</li>
+                    <li>{{ data.email }}</li>
+                    <li>Phone number:</li>
+                    <li>{{ data.phoneNumber }}</li>
+                    <li>Order number:</li>
+                    <li>{{ data.orderNumber }}</li>
+                    <li>Order date:</li>
+                    <li>{{ formatDate(data.orderDate) }}</li>
+                    <li>Order Status:</li>
+                    <li>{{ data.status }}</li>
                     <div class="spacer"></div>
+                </ul>
+                <ul class="container__item__list">
                     <li>{{ data.street }} {{ data.houseNumber }}</li>
-                    <li>{{ data.zipCode }}</li>
-                    <li>{{ data.city }}</li>
+                    <li>{{ data.zipCode }} {{ data.city }}</li>
                     <li>{{ data.state }}</li>
                     <li>{{ data.country }}</li>
                     <li>
@@ -195,7 +201,7 @@ const removeShoe = () => {
         display: grid;
         grid-column-gap: 10%;
         grid-row-gap: 10px;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 45%));
+        grid-template-columns: repeat(auto-fill, minmax(450px, 45%));
     }
     .container__item{
         border: 1px solid white;
@@ -260,5 +266,10 @@ const removeShoe = () => {
         right: 20px;
         fill: white;
         cursor: pointer;
+    }
+    .container__item__list.grid{
+        display: grid;
+        grid-template-columns: 130px 1fr;
+        word-break: break-all;
     }
 </style>

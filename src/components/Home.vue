@@ -1,9 +1,10 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 const router = useRouter()
 const data = ref([]);
 let socket = ref(null);
+
 
 onMounted(() => {
   socket = new WebSocket('wss://shoeconfigurator.onrender.com/primus');

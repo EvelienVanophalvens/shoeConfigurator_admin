@@ -2,9 +2,6 @@
     import { useRouter } from 'vue-router'
     import { ref, defineEmits } from 'vue'
 
-    //define emit function
-    const emit = defineEmits(['status-updated']);
-
     const data = ref([]);
     const urlParams = new URLSearchParams(window.location.search);
     const router = useRouter()
@@ -49,9 +46,7 @@
         .then(data =>{
             console.log(data);
             update.value = "Order updated to: " + newStage;
-            console.log(data);
-            console.log(update.value);
-            updateStatus(data.data[0].shoe._id, newStage);
+            updateStatus();
         })
         .catch(err => {
             console.log(err);
@@ -73,8 +68,11 @@
             return 'delivered';
         }
     }
-    const updateStatus = (id, status) => {
-        emit('status-updated', {id, status});
+    const updateStatus = () => {
+        // go to home page after 5 seconds
+        setTimeout(() => {
+            router.push('/home');
+        }, 1000);
     }
 
 

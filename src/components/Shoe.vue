@@ -82,8 +82,15 @@ const previousStage = (currentstage) => {
         updateStage(newStage.value);
         return 'shipped';
     }
-
-}
+    }
+    const removeShoe = () =>{
+        const removeShoe = data.value._id;
+        console.log(removeShoe);
+    }
+    const goBack = () => {
+        //go back to home page
+        router.push('/home');
+    }
 const removeShoe = () => {
     fetch(fetchurl, {
         method: 'DELETE',
@@ -105,6 +112,7 @@ const removeShoe = () => {
 }
 </script>
 <template>
+    <svg @click="goBack" class="icon icon--closeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
     <div class="container">
         <div class="container__item">
             <h1>{{ data.shoeName }}</h1>
@@ -176,65 +184,68 @@ const removeShoe = () => {
 </template>
 
 <style scoped>
-.container {
-    width: 90%;
-    margin: 64px auto 64px auto;
-    padding: 0;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 32px;
-}
-
-.container__item {
-    border: 1px solid black;
-    padding: 16px;
-}
-
-.container__item__list {
-    list-style: none;
-    padding: 0;
-}
-
-.spacer {
-    height: 24px;
-}
-
-.container__item__list__item {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-}
-
-.colorbox {
-    width: 100px;
-    height: 24px;
-    margin-top: 14px;
-}
-
-.btn--medium {
-    width: 200px;
-    height: 45px;
-    text-align: center;
-    line-height: 45px;
-    margin-top: 20px;
-}
-
-.btn--primary {
-    background-color: var(--primary-color);
-    border: none;
-    color: black;
-}
-
-.btn--medium:hover {
-    background-color: var(--primary-color-hover);
-    cursor: pointer;
-}
-
-.btn--red {
-    background-color: var(--red-color);
-    color: white;
-}
-
-.btn--red:hover {
-    background-color: var(--red-color-hover);
-    cursor: pointer;
-}</style>
+    .container{
+        width: 90%;
+        margin: 64px auto 64px auto ;
+        padding: 0;
+        display: grid;
+        grid-column-gap: 10%;
+        grid-row-gap: 11.1%;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 45%));
+    }
+    .container__item{
+        border: 1px solid black;
+        padding: 16px;
+    }
+    .container__item__list{
+        list-style: none;
+        padding: 0;
+    }
+    .spacer{
+        height: 24px;
+    }
+    .container__item__list__item{
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .colorbox{
+        width: 100px;
+        height: 24px;
+        margin-top: 14px;
+    }
+    .btn--medium{
+        width: 200px;
+        height: 45px;
+        text-align: center;
+        line-height: 45px;
+        margin-top: 20px;
+    }
+    .btn--primary{
+        background-color: var(--primary-color);
+        border: none;
+        color: black;
+    }
+    .btn--medium:hover{
+        background-color: var(--primary-color-hover);
+        cursor: pointer;
+    }
+    .btn--red{
+        background-color: var(--red-color);
+        color: white;
+    }
+    .btn--red:hover{
+        background-color: var(--red-color-hover);
+        cursor: pointer;
+    }
+    .icon{
+        width: 44px;
+        height: 44px;
+    }
+    .icon--closeIcon{
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        fill: black;
+        cursor: pointer;
+    }
+</style>

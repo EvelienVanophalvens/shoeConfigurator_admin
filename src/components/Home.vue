@@ -1,8 +1,37 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import { ref } from 'vue'
+import { onMounted, ref, watch } from 'vue'
 const router = useRouter()
 const data = ref([]);
+let socket = ref(null);
+
+
+onMounted(() => {
+  socket = new WebSocket('wss://shoeconfigurator.onrender.com/primus');
+  socket.addEventListener('open', function (event) {
+    console.log('connected');
+  });
+
+  
+  socket.onmessage = (event) => {
+  //push new data to data.value
+  console.log(event.data);
+  let newShoe = JSON.parse(event.data);
+  data.value.push(newShoe);
+  console.log(data.value);
+  if (newShoe === 'ping'){
+    console.log('ping');
+    if (socket.readyState === WebSocket.OPEN) {
+      console.log('pong');
+    socket.send('pong');
+  }
+  }
+  }
+});
+
+
+
+
 
 fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
   headers: {

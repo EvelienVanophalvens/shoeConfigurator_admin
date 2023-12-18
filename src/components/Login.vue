@@ -20,7 +20,6 @@ const login = () => {
             router.push('/home');
            let token = data.data.token;
             localStorage.setItem('token', token);
-            document.querySelector('.message--error').style.display = 'none'
        } else {
            //show error message
            document.querySelector('.message--error').innerHTML = 'Incorrect email or password'

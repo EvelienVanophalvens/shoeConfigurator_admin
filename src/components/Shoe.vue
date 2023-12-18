@@ -111,81 +111,86 @@ const removeShoe = () => {
 }
 </script>
 <template>
-    <svg @click="goBack" class="icon icon--closeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
-    <div class="container">
-        <div class="container__item">
-            <h1>{{ data.shoeName }}</h1>
-            <h2>Size: {{ data.shoeSize }}</h2>
-            <p>Material: {{ data.innerMaterial }}</p>
-            <h3>Colors:</h3>
-            <ul class="container__item__list">
-                <div class="container__item__list__item">
-                    <p>Laces: </p>
-                    <div class="colorbox" :style="{ backgroundColor: '#' + data.colorLaces }"></div>
-                    <p>#{{ data.colorLaces }}</p>
-                </div>
-                <div class="container__item__list__item">
-                    <p>Inner Material: </p>
-                    <div class="colorbox" :style="{ backgroundColor: '#' + data.colorInnerMaterial }"></div>
-                    <p>#{{ data.colorInnerMaterial }}</p>
-                </div>
-                <div class="container__item__list__item">
-                    <p>Mid Material: </p>
-                    <div class="colorbox" :style="{ backgroundColor: '#' + data.colorMidMaterial }"></div>
-                    <p>#{{ data.colorMidMaterial }}</p>
-                </div>
-                <div class="container__item__list__item">
-                    <p>Outer Material: </p>
-                    <div class="colorbox" :style="{ backgroundColor: '#' + data.colorOuterMaterial }"></div>
-                    <p>#{{ data.colorOuterMaterial }}</p>
-                </div>
-                <div class="container__item__list__item">
-                    <p>Midsole: </p>
-                    <div class="colorbox" :style="{ backgroundColor: '#' + data.colorMidsole }"></div>
-                    <p>#{{ data.colorMidsole }}</p>
-                </div>
-                <div class="container__item__list__item">
-                    <p>Outsole: </p>
-                    <div class="colorbox" :style="{ backgroundColor: '#' + data.colorOutsole }"></div>
-                    <p>#{{ data.colorOutsole }}</p>
-                </div>
-            </ul>
-        </div>
-        <div class="container__item">
-            <h2>{{ data.firstName }} {{ data.lastName }}</h2>
-            <ul class="container__item__list">
-                <li>Email: {{ data.email }}</li>
-                <li>Phone number: {{ data.phoneNumber }}</li>
-                <li>Order number: {{ data.orderNumber }}</li>
-                <li>Order date: {{ formatDate(data.orderDate) }}</li>
-                <li>Order Status: {{ data.status }}</li>
-                <div class="spacer"></div>
-                <li>{{ data.street }} {{ data.houseNumber }}</li>
-                <li>{{ data.zipCode }}</li>
-                <li>{{ data.city }}</li>
-                <li>{{ data.state }}</li>
-                <li>{{ data.country }}</li>
-                <li>
-                    <div class="btn--medium btn--blue" @click="previousStage(data.status)">Previous order stage</div>
-                </li>
-                <li>
-                    <div class="btn--medium btn--blue" @click="nextStage(data.status)">Next order stage</div>
-                </li>
-                <li>
-                    <div class="btn--medium btn--primary btn--red" @click="removeShoe()">Remove shoe</div>
-                </li>
-                <li>
-                    <p>{{ update }}</p>
-                </li>
-            </ul>
+    <div class="body">
+        <svg @click="goBack" class="icon icon--closeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
+        <div class="container">
+            <div class="container__item">
+                <h1>{{ data.shoeName }}</h1>
+                <h2>Size: {{ data.shoeSize }}</h2>
+                <p>Material: {{ data.innerMaterial }}</p>
+                <h3>Colors:</h3>
+                <ul class="container__item__list">
+                    <div class="container__item__list__item">
+                        <p>Laces: </p>
+                        <div class="colorbox" :style="{ backgroundColor: '#' + data.colorLaces }"></div>
+                        <p>#{{ data.colorLaces }}</p>
+                    </div>
+                    <div class="container__item__list__item">
+                        <p>Inner Material: </p>
+                        <div class="colorbox" :style="{ backgroundColor: '#' + data.colorInnerMaterial }"></div>
+                        <p>#{{ data.colorInnerMaterial }}</p>
+                    </div>
+                    <div class="container__item__list__item">
+                        <p>Mid Material: </p>
+                        <div class="colorbox" :style="{ backgroundColor: '#' + data.colorMidMaterial }"></div>
+                        <p>#{{ data.colorMidMaterial }}</p>
+                    </div>
+                    <div class="container__item__list__item">
+                        <p>Outer Material: </p>
+                        <div class="colorbox" :style="{ backgroundColor: '#' + data.colorOuterMaterial }"></div>
+                        <p>#{{ data.colorOuterMaterial }}</p>
+                    </div>
+                    <div class="container__item__list__item">
+                        <p>Midsole: </p>
+                        <div class="colorbox" :style="{ backgroundColor: '#' + data.colorMidsole }"></div>
+                        <p>#{{ data.colorMidsole }}</p>
+                    </div>
+                    <div class="container__item__list__item">
+                        <p>Outsole: </p>
+                        <div class="colorbox" :style="{ backgroundColor: '#' + data.colorOutsole }"></div>
+                        <p>#{{ data.colorOutsole }}</p>
+                    </div>
+                </ul>
+            </div>
+            <div class="container__item">
+                <h2>{{ data.firstName }} {{ data.lastName }}</h2>
+                <ul class="container__item__list">
+                    <li>Email: {{ data.email }}</li>
+                    <li>Phone number: {{ data.phoneNumber }}</li>
+                    <li>Order number: {{ data.orderNumber }}</li>
+                    <li>Order date: {{ formatDate(data.orderDate) }}</li>
+                    <li>Order Status: {{ data.status }}</li>
+                    <div class="spacer"></div>
+                    <li>{{ data.street }} {{ data.houseNumber }}</li>
+                    <li>{{ data.zipCode }}</li>
+                    <li>{{ data.city }}</li>
+                    <li>{{ data.state }}</li>
+                    <li>{{ data.country }}</li>
+                    <li>
+                        <div class="btn--medium btn--blue" @click="previousStage(data.status)">Previous order stage</div>
+                    </li>
+                    <li>
+                        <div class="btn--medium btn--blue" @click="nextStage(data.status)">Next order stage</div>
+                    </li>
+                    <li>
+                        <div class="btn--medium btn--primary btn--red" @click="removeShoe()">Remove shoe</div>
+                    </li>
+                    <li>
+                        <p>{{ update }}</p>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
-
 <style scoped>
+    div.body{
+      background-color: var(--offblack-color);
+      color: white;
+    }
     .container{
         width: 90%;
-        margin: 64px auto 64px auto ;
+        margin: 100px auto 64px auto ;
         padding: 0;
         display: grid;
         grid-column-gap: 10%;
@@ -193,7 +198,7 @@ const removeShoe = () => {
         grid-template-columns: repeat(auto-fill, minmax(300px, 45%));
     }
     .container__item{
-        border: 1px solid black;
+        border: 1px solid white;
         padding: 16px;
     }
     .container__item__list{
@@ -251,9 +256,9 @@ const removeShoe = () => {
     }
     .icon--closeIcon{
         position: absolute;
-        top: 20px;
+        top: 50px;
         right: 20px;
-        fill: black;
+        fill: white;
         cursor: pointer;
     }
 </style>

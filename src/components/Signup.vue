@@ -45,6 +45,7 @@ const signup = () => {
 </script>
 
 <template>
+
     <div class="body">
         <div class="formwrapper">
             <form @submit.prevent="signup" class="form">
@@ -79,13 +80,7 @@ const signup = () => {
 
 <style scoped>
     div.body{
-        position: absolute;
         background-image: url('../assets/background.png');
-        height: 100vh;
-        width: 100vw;
-        top: 0;
-        left: 0;
-        z-index: -1;
     }
     .formwrapper{
         position: absolute;

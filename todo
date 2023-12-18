@@ -2,9 +2,10 @@ Todo:
 - Create standard material + no colors for material
 - Zo veel mogelijk websockets fixen
 - Password reset
-- Logout
+
 - Order counter (live update)
 
 In progress (add name after todo)
 
 Done
+- Logout

@@ -5,6 +5,7 @@ const router = useRouter()
 
 const login = () => {
     fetch ('https://shoeconfigurator.onrender.com/api/v1/users/login', {
+    // fetch('http://localhost:3000/api/v1/users/login', { //change to this when running locally
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -76,7 +77,10 @@ const login = () => {
         background-color: var(--primary-color);
         border: none;
     }
-
+    .btn--primary:hover{
+        background-color: var(--primary-color-hover);
+        cursor: pointer;
+    }
     .input--btn {
         flex-direction: row;
         justify-content: end;

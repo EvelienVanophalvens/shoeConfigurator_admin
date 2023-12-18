@@ -5,7 +5,6 @@ const router = useRouter()
 const data = ref([]);
 let socket = ref(null);
 
-
 onMounted(() => {
   socket = new WebSocket('wss://shoeconfigurator.onrender.com/primus');
   socket.addEventListener('open', function (event) {
@@ -28,11 +27,6 @@ onMounted(() => {
   }
   }
 });
-
-
-
-
-
 fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
   headers: {
     "Authorization": "Bearer " + localStorage.getItem('token'),
@@ -49,26 +43,27 @@ fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
 <template>
   <h1>Orders</h1>
   <h2>Pending</h2>
-  <ul class="table" v-for="shoe in data">
-    <li class="table__row" v-if="shoe.status === 'pending'">
-      <div class="table__row__item">
-        {{shoe.orderNumber}}
-      </div>
-      <div class="table__row__item">
-        {{shoe.firstName}}
-      </div>
-      <div class="table__row__item">
-        {{shoe.shoeName}}
-      </div>
-      <div class="table__row__item">
-        {{shoe.shoeSize}}
-      </div>
-      <div class="btn btn--small btn--primary">
-        <a class="btn__link" :href="'Shoe?id=' + shoe._id">View</a>
-      </div>
-    </li>
-  </ul>
+  <table>
+    <ul class="table" v-for="shoe in data">
+      <li class="table__row" v-if="shoe.status === 'pending'">
+        <div class="table__row__item">
+          {{shoe.orderNumber}}
+        </div>
+        <div class="table__row__item">
+          {{shoe.firstName}}
+        </div>
+        <div class="table__row__item">
+          {{shoe.shoeName}}
+        </div>
+        <div class="table__row__item">
+          {{shoe.shoeSize}}
+        </div>
+        <a class="btn btn--small btn--primary btn__link" :href="'Shoe?id=' + shoe._id">View</a>
+      </li>
+    </ul>
+  </table>
   <h2>Processing</h2>
+  <table>
     <ul class="table" v-for="shoe in data">
       <li class="table__row" v-if="shoe.status === 'processing'">
         <div class="table__row__item">
@@ -83,12 +78,12 @@ fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
         <div class="table__row__item">
           {{shoe.shoeSize}}
         </div>
-        <div class="btn btn--small btn--primary">
-          <a class="btn__link" :href="'Shoe?id=' + shoe._id">View</a>
-        </div>
+        <a class="btn btn--small btn--primary btn__link" :href="'Shoe?id=' + shoe._id">View</a>
       </li>
     </ul>
+  </table>
   <h2>Shipped</h2>
+  <table>
     <ul class="table" v-for="shoe in data">
       <li class="table__row" v-if="shoe.status === 'shipped'">
         <div class="table__row__item">
@@ -103,12 +98,12 @@ fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
         <div class="table__row__item">
           {{shoe.shoeSize}}
         </div>
-        <div class="btn btn--small btn--primary">
-          <a class="btn__link" :href="'Shoe?id=' + shoe._id">View</a>
-        </div>
+        <a class="btn btn--small btn--primary btn__link" :href="'Shoe?id=' + shoe._id">View</a>
       </li>
     </ul>
+  </table>
   <h2>Delivered</h2>
+  <table>
     <ul class="table" v-for="shoe in data">
       <li class="table__row" v-if="shoe.status === 'delivered'">
         <div class="table__row__item">
@@ -123,32 +118,42 @@ fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
         <div class="table__row__item">
           {{shoe.shoeSize}}
         </div>
-        <div class="btn btn--small btn--primary">
-          <a class="btn__link" :href="'Shoe?id=' + shoe._id">View</a>
-        </div>
+        <a class="btn btn--small btn--primary btn__link" :href="'Shoe?id=' + shoe._id">View</a>
       </li>
     </ul>
+  </table>
 </template>
 <style scoped>
-
-    .table{
+    table{
         width: 90%;
-        margin: 64px auto 64px auto ;
+        margin-top: 0;
+        margin-bottom: 0;
+        margin-left: 64px;
+        padding: 0;
+        list-style: none;
+        border-bottom: 1px solid black;
+    }
+    .table{
+        width: 100%;
+        margin-top: 0;
+        margin-bottom: 0;
         padding: 0;
         list-style: none;
     }
     h1, h2{
         margin-left: 28px;
     }
-    .table__row:not(:only-child):first-child {
-    border-bottom: none;
+    h2{
+        margin-top: 64px;
     }
     .table__row{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        display: grid;
+        grid-template-columns: 100px 100px 150px 50px 100px;
         padding: 12px 16px;
-        border: 1px solid black;
+        align-items: center;
+    }
+    .table__row {
+    border-top: 1px solid black;
     }
     .btn--small{
         width: 120px;
@@ -171,5 +176,33 @@ fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
     .btn--primary:hover{
         background-color: var(--primary-color-hover);
         cursor: pointer;
+    }
+    @media screen and (max-width: 690px) {
+      .table__row{
+        grid-template-columns: 100px 100px 50px 100px;
+      }
+      .table__row__item:nth-child(3){
+        display: none;
+      }
+    }
+    @media screen and (max-width: 500px) {
+      .table__row{
+        grid-template-columns: 100px 100px 100px;
+      }
+      .table__row__item:nth-child(4){
+        display: none;
+      }
+    }
+    @media screen and (max-width: 420px) {
+        .table__row{
+            grid-template-columns: 100px 1fr;
+            grid-template-rows: 30px 30px;
+        }
+        .table__row__item:nth-child(1){
+            grid-column: 1 / 3;
+        }
+        table{
+          margin-left: 8px;
+        }
     }
 </style>

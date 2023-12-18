@@ -166,10 +166,10 @@ const removeShoe = () => {
                 <li>{{ data.state }}</li>
                 <li>{{ data.country }}</li>
                 <li>
-                    <div class="btn--medium btn--primary" @click="previousStage(data.status)">Previous order stage</div>
+                    <div class="btn--medium btn--blue" @click="previousStage(data.status)">Previous order stage</div>
                 </li>
                 <li>
-                    <div class="btn--medium btn--primary" @click="nextStage(data.status)">Next order stage</div>
+                    <div class="btn--medium btn--blue" @click="nextStage(data.status)">Next order stage</div>
                 </li>
                 <li>
                     <div class="btn--medium btn--primary btn--red" @click="removeShoe()">Remove shoe</div>
@@ -235,6 +235,15 @@ const removeShoe = () => {
     .btn--red:hover{
         background-color: var(--red-color-hover);
         cursor: pointer;
+    }
+    .btn--blue{
+        background-color: var(--blue-color);
+        color: white;
+    }
+    .btn--blue:hover{
+        background-color: var(--blue-color-hover);
+        cursor: pointer;
+        color: white;
     }
     .icon{
         width: 44px;

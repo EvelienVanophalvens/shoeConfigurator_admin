@@ -236,6 +236,9 @@ const removeShoe = (shoeid) => {
     h2{
         margin-top: 64px;
     }
+    h1{
+        margin-top: 100px;
+    }
     .table__row{
         display: grid;
         grid-template-columns: 10% 10% 15% 5% 17% 17% 17%;

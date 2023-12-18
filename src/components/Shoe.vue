@@ -1,12 +1,16 @@
 <script setup>
     import { useRouter } from 'vue-router'
-    import { ref } from 'vue'
+    import { ref, defineEmits } from 'vue'
+
+    //define emit function
+    const emit = defineEmits(['status-updated']);
 
     const data = ref([]);
     const urlParams = new URLSearchParams(window.location.search);
     const router = useRouter()
     let newStage = ref("");
     let update = ref("");
+
     const fetchurl = "https://shoeconfigurator.onrender.com/api/v1/shoes/" + urlParams.get('id');
     fetch(fetchurl, {
         headers: {
@@ -29,7 +33,7 @@
 
       return `${day}-${month}-${year} - ${hours}:${minutes}`;
     }
-    const updateStage = (newStage) => {
+    const updateStage = (newStage, emit) => {
         //put new stage through api
         fetch(fetchurl, {
             method: 'PATCH',
@@ -44,9 +48,10 @@
         .then(response => response.json())
         .then(data =>{
             console.log(data);
-            update.value = "Order updated to: <b>" + newStage + "</b>";
+            update.value = "Order updated to: " + newStage;
             console.log(data);
             console.log(update.value);
+            updateStatus(data.data[0].shoe._id, newStage);
         })
         .catch(err => {
             console.log(err);
@@ -68,6 +73,11 @@
             return 'delivered';
         }
     }
+    const updateStatus = (id, status) => {
+        emit('status-updated', {id, status});
+    }
+
+
     const previousStage = (currentstage) => {
         if(currentstage === 'processing'){
             newStage.value = 'pending';

@@ -17,14 +17,16 @@ onMounted(() => {
   //push new data to data.value
   console.log(event.data);
   let newShoe = JSON.parse(event.data);
-  data.value.push(newShoe);
-  console.log(data.value);
+  if(newShoe.status === 'pending'){
+    data.value.push(newShoe);
+    console.log("pending" + data.value);
+  }
+
   if (newShoe === 'ping'){
-    console.log('ping');
     if (socket.readyState === WebSocket.OPEN) {
-      console.log('pong');
     socket.send('pong');
   }
+  
   }
   }
 });
@@ -64,7 +66,7 @@ fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
         {{shoe.shoeSize}}
       </div>
       <div class="btn btn--small btn--primary">
-        <a class="btn__link" :href="'Shoe?id=' + shoe._id">View</a>
+        <a class="btn__link" :href="'Shoe?id=' + shoe.orderNumber">View</a>
       </div>
     </li>
   </ul>
@@ -84,7 +86,7 @@ fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
           {{shoe.shoeSize}}
         </div>
         <div class="btn btn--small btn--primary">
-          <a class="btn__link" :href="'Shoe?id=' + shoe._id">View</a>
+          <a class="btn__link" :href="'Shoe?id=' + shoe.orderNumber">View</a>
         </div>
       </li>
     </ul>
@@ -104,7 +106,7 @@ fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
           {{shoe.shoeSize}}
         </div>
         <div class="btn btn--small btn--primary">
-          <a class="btn__link" :href="'Shoe?id=' + shoe._id">View</a>
+          <a class="btn__link" :href="'Shoe?id=' + shoe.orderNumber">View</a>
         </div>
       </li>
     </ul>
@@ -124,7 +126,7 @@ fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
           {{shoe.shoeSize}}
         </div>
         <div class="btn btn--small btn--primary">
-          <a class="btn__link" :href="'Shoe?id=' + shoe._id">View</a>
+          <a class="btn__link" :href="'Shoe?id=' + shoe.orderNumber">View</a>
         </div>
       </li>
     </ul>

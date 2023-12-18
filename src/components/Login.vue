@@ -29,7 +29,7 @@ const login = () => {
 }
 </script>
 <template>
-     <div class="form">
+     <form @submit.prevent="login" class="form">
         <h1>Login</h1>
         <p>Don't have an account? <a href="/Signup">Sign up</a></p>
         <p class="message message--error"></p>
@@ -42,9 +42,9 @@ const login = () => {
             <input class="input__field" type="password" id="password" />
         </div>
         <div class="input input--btn">
-            <button class="btn btn--small btn--primary" @click="login">Login</button>
+            <button type="submit" class="btn btn--small btn--primary">Login</button>
         </div>
-    </div>
+    </form>
 </template>
 <style scoped>
     .form{

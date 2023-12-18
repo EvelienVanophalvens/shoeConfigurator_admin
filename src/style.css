@@ -9,3 +9,6 @@ body{
   margin: 0px;
   font-family: Arial, Helvetica, sans-serif;
 }
+.btn:hover{
+  cursor: pointer;
+}

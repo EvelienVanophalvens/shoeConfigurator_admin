@@ -18,9 +18,14 @@ onMounted(() => {
   let newShoe = JSON.parse(event.data);
   data.value.push(newShoe);
   console.log(data.value);
+  if (newShoe === 'ping'){
+    console.log('ping');
+    if (socket.readyState === WebSocket.OPEN) {
+      console.log('pong');
+    socket.send('pong');
   }
-
-
+  }
+  }
 });
 
 

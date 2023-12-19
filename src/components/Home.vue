@@ -141,9 +141,11 @@ watch(counter, () => {
 
 </script>
 <template>
-  <h1>Orders</h1>
+  <div class="container container--full">
+    <h1 class="container__item container__item--noBorder">Orders</h1>
+    <h1 class="container__item container__item--noBorder">{{counter}}</h1>
+  </div>
   <h2>Pending</h2>
-  <p>{{counter}}</p>
   <table>
     <ul class="table" v-for="shoe in data">
       <li class="table__row" v-if="shoe.status === 'pending'">
@@ -233,6 +235,28 @@ watch(counter, () => {
   </table>
 </template>
 <style scoped>
+    .container{
+        width: 90%;
+        margin: 64px auto 64px auto ;
+        padding: 0;
+        display: grid;
+        grid-column-gap: 10%;
+        grid-row-gap: 10px;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 45%));
+    }
+
+    .container--full{
+      width: 100%;
+    }
+
+    .container__item{
+        border: 1px solid black;
+        padding: 16px;
+    }
+    .container__item--noBorder{
+      border: none;
+    }
+
     table{
         width: 90%;
         margin-top: 0;

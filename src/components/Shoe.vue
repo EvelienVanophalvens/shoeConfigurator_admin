@@ -189,7 +189,7 @@ const removeShoe = () => {
         padding: 0;
         display: grid;
         grid-column-gap: 10%;
-        grid-row-gap: 11.1%;
+        grid-row-gap: 10px;
         grid-template-columns: repeat(auto-fill, minmax(300px, 45%));
     }
     .container__item{

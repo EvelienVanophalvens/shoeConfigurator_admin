@@ -86,7 +86,7 @@ const signup = () => {
         position: absolute;
         top: 0;
         left: 0;
-        width: 100vw;
+        width: 100%;
         height: 100vh;
         background: radial-gradient(rgb(0, 0, 0) 30%, rgba(0, 0, 0, 0));
     }

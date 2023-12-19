@@ -56,7 +56,7 @@ const changePassword = () => {
             <input class="input__field" type="password" id="confirmPassword" v-model="confirmPassword" required />
         </div>
         <div class="input input--btn">
-             <button type="submit" class="btn btn--small btn--primary">changePassword</button>
+             <button type="submit" class="btn btn--small btn--primary">change password</button>
         </div>
         <p class="form__error">{{message}}</p>
         </form>

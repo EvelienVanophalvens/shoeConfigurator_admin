@@ -63,6 +63,7 @@ fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
 let newStage = ref("");
 let update = ref("");
 const updateStage = (newStage, shoeid) => {
+  console.log(newStage);
   socket.send(JSON.stringify({
       id: shoeid,
       status: newStage,
@@ -77,7 +78,8 @@ const updateStage = (newStage, shoeid) => {
             "Authorization": "Bearer " + localStorage.getItem('token'),
         },
         body: JSON.stringify({
-            status: newStage
+            status: newStage,
+            id: shoeid
         })
     })
         .then(response => response.json())

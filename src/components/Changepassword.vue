@@ -1,12 +1,52 @@
-<script setup></script>
+<script setup>
+import { useRouter } from 'vue-router'
+import { ref } from 'vue'
+
+let newPassword = ref("");
+let confirmPassword = ref("");
+let message = ref("");
+const router = useRouter()
+
+const changePassword = () => {
+    console.log(newPassword.value);
+    console.log(confirmPassword.value)
+    //check if passwords match
+    if (newPassword.value == confirmPassword.value) {
+        //put new password through api
+        fetch("https://shoeconfigurator.onrender.com/api/v1/users/password", {
+            method: 'PATCH',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem('token'),
+            },
+            body: JSON.stringify({
+                password: newPassword.value
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                message.value = "Password changed";
+                console.log(data);
+                console.log(message.value);
+                setTimeout(() => {
+                    router.push('/home');
+            }, 2000);
+            })
+            .catch(err => {
+                console.log(err);
+                message.value = "Something went wrong";
+            })
+    } else {
+        message.value = "Passwords do not match";
+    }
+}
+
+</script>
 <template>
     <div class="body">
         <h1>Change Password</h1>
         <form class="form" @submit.prevent="changePassword">
-        <div class="input">
-            <label class="input__label" for="oldPassword">Old Password</label>
-            <input class="input__field" type="password" id="oldPassword" v-model="oldPassword" required />
-        </div>
         <div class="input">
             <label class="input__label" for="newPassword">New Password</label>
             <input class="input__field" type="password" id="newPassword" v-model="newPassword" required />
@@ -18,7 +58,7 @@
         <div class="input input--btn">
              <button type="submit" class="btn btn--small btn--primary">changePassword</button>
         </div>
-        <p class="form__error">{{update}}</p>
+        <p class="form__error">{{message}}</p>
         </form>
     </div>
 </template>

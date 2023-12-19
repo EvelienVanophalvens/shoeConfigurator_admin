@@ -8,12 +8,20 @@
         localStorage.removeItem('token');
         router.push('/');
     }
+    const changePassword = () => {
+        router.push('/changePassword');
+    }
 </script>
 
 <template>
-    <div class="logo">
-        <img class="logo__img" src="../assets/SWEAR_logo.png" alt="logo" />
-        <button class="btn btn--small btn--primary" @click="logout">Log out</button>
+    <div class="nav">
+        <div class="logo">
+            <img class="logo__img" src="../assets/SWEAR_logo.png" alt="logo" />
+        </div>
+        <div class="btnGroup">
+                <button class="btnGroup__btn btn--small btn--primary" @click="changePassword">Change password</button>
+                <button class="btnGroup__btn btn--small btn--primary" @click="logout">Log out</button>
+            </div>
     </div>
 </template>
 
@@ -39,9 +47,18 @@
         background-color: var(--primary-color-hover);
         cursor: pointer;
     }
-    .btn{
-        position: absolute;
-        right: 0;
-        top: 0;
+    .btnGroup{
+        display: flex;
+        flex-direction: row;
+        width: 20%;
+        justify-content: space-between;
+    }
+    .nav{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+
     }
 </style>

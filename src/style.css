@@ -19,11 +19,11 @@ body{
   background-color: var(--primary-color-hover);
   cursor: pointer;
 }
+#app{
+  position: sticky;
+  background: var(--offblack-color);
+}
 div.body{
-  position: absolute;
   height: 100vh;
-  width: 100vw;
-  top: 0;
-  left: 0;
-  z-index: -1;
+  color: white;
 }

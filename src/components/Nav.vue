@@ -52,7 +52,11 @@
         flex-direction: row;
         width: 20%;
         justify-content: space-between;
+        flex-wrap: wrap;
     }
+    .btnGroup > * {
+    margin-bottom: 10px; /* Adjust as needed */
+}
     .nav{
         display: flex;
         flex-direction: row;

@@ -195,6 +195,7 @@ const removeShoe = (id) => {
     div.body{
       background-color: var(--offblack-color);
       color: white;
+        height: 100%;
     }
     .container{
         width: 90%;

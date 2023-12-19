@@ -38,11 +38,11 @@ const login = () => {
                 <p class="message message--error"></p>
                 <div class="input">
                     <label class="input__label" for="email">Email</label>
-                    <input class="input__field" type="email" id="email" />
+                    <input class="input__field" autocapitalize="off" autocorrect="off" type="email" id="email" name="email" required/>
                 </div>
                 <div class="input">
                     <label class="input__label" for="password">Password</label>
-                    <input class="input__field" type="password" id="password" />
+                    <input class="input__field" autocapitalize="off" autocorrect="off" type="password" id="password" name="password" required />
                 </div>
                 <div class="input input--btn">
                     <button type="submit" class="btn btn--small btn--primary">Login</button>
@@ -69,6 +69,18 @@ const login = () => {
         width: 650px;
         margin: 0 auto;
         margin-top: 200px;
+        animation: scale-up 0.8s ease-in-out;
+    }
+    @keyframes scale-up {
+        0% {
+        transform: scale(0);
+        }
+        85% {
+            transform: scale(1.1);
+        }
+        100% {
+            transform: scale(1);
+        }
     }
     .input{
         margin: 32px 0 0 0;

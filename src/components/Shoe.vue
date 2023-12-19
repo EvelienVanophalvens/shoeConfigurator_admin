@@ -189,19 +189,22 @@ const removeShoe = (id) => {
         </div>
     </div>
 </template>
-
 <style scoped>
+    div.body{
+      background-color: var(--offblack-color);
+      color: white;
+    }
     .container{
         width: 90%;
-        margin: 64px auto 64px auto ;
+        margin: 100px auto 64px auto ;
         padding: 0;
         display: grid;
         grid-column-gap: 10%;
         grid-row-gap: 10px;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 45%));
+        grid-template-columns: repeat(auto-fill, minmax(450px, 45%));
     }
     .container__item{
-        border: 1px solid black;
+        border: 1px solid white;
         padding: 16px;
     }
     .container__item__list{
@@ -244,15 +247,29 @@ const removeShoe = (id) => {
         background-color: var(--red-color-hover);
         cursor: pointer;
     }
+    .btn--blue{
+        background-color: var(--blue-color);
+        color: white;
+    }
+    .btn--blue:hover{
+        background-color: var(--blue-color-hover);
+        cursor: pointer;
+        color: white;
+    }
     .icon{
         width: 44px;
         height: 44px;
     }
     .icon--closeIcon{
         position: absolute;
-        top: 20px;
+        top: 50px;
         right: 20px;
-        fill: black;
+        fill: white;
         cursor: pointer;
+    }
+    .container__item__list.grid{
+        display: grid;
+        grid-template-columns: 130px 1fr;
+        word-break: break-all;
     }
 </style>

@@ -5,6 +5,7 @@
     --red-color-hover: #fa3737;
     --blue-color: #6363fe;
     --blue-color-hover: #4c4cf8;
+    --offblack-color: rgb(18, 18, 18);
 }
 
 body{
@@ -13,4 +14,16 @@ body{
 }
 .btn:hover{
   cursor: pointer;
+}
+.btn--primary:hover{
+  background-color: var(--primary-color-hover);
+  cursor: pointer;
+}
+#app{
+  position: sticky;
+  background: var(--offblack-color);
+}
+div.body{
+  height: 100vh;
+  color: white;
 }

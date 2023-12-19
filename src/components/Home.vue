@@ -264,7 +264,7 @@ watch(counter, () => {
         margin-left: 64px;
         padding: 0;
         list-style: none;
-        border-bottom: 1px solid black;
+        border-bottom: 1px solid white;
     }
     .table{
         width: 100%;
@@ -279,6 +279,9 @@ watch(counter, () => {
     h2{
         margin-top: 64px;
     }
+    h1{
+        margin-top: 100px;
+    }
     .table__row{
         display: grid;
         grid-template-columns: 10% 10% 15% 5% 17% 17% 17%;
@@ -286,7 +289,7 @@ watch(counter, () => {
         align-items: center;
     }
     .table__row {
-    border-top: 1px solid black;
+    border-top: 1px solid white;
     }
     .btn--small{
         width: 120px;

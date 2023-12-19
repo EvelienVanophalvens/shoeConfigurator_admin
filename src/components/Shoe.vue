@@ -29,7 +29,7 @@ const formatDate = (dateString) => {
 
     return `${day}-${month}-${year} - ${hours}:${minutes}`;
 }
-const updateStage = (newStage) => {
+const updateStage = (newStage, id) => {
     //put new stage through api
     fetch(fetchurl, {
         method: 'PATCH',
@@ -38,6 +38,7 @@ const updateStage = (newStage) => {
             "Authorization": "Bearer " + localStorage.getItem('token'),
         },
         body: JSON.stringify({
+            id: id,
             status: newStage
         })
     })
@@ -56,33 +57,33 @@ const updateStage = (newStage) => {
             update.value = "Something went wrong";
         })
 }
-const nextStage = (currentstage) => {
+const nextStage = (currentstage, id) => {
     if (currentstage === 'pending') {
         newStage.value = 'processing';
-        updateStage(newStage.value);
+        updateStage(newStage.value, id);
         return 'processing';
     } else if (currentstage === 'processing') {
         newStage.value = 'shipped';
-        updateStage(newStage.value);
+        updateStage(newStage.value, id);
         return 'shipped';
     } else if (currentstage === 'shipped') {
         newStage.value = 'delivered';
-        updateStage(newStage.value);
+        updateStage(newStage.value, id);
         return 'delivered';
     }
 }
-const previousStage = (currentstage) => {
+const previousStage = (currentstage, id) => {
     if (currentstage === 'processing') {
         newStage.value = 'pending';
-        updateStage(newStage.value);
+        updateStage(newStage.value, id);
         return 'pending';
     } else if (currentstage === 'shipped') {
         newStage.value = 'processing';
-        updateStage(newStage.value);
+        updateStage(newStage.value, id);
         return 'processing';
     } else if (currentstage === 'delivered') {
         newStage.value = 'shipped';
-        updateStage(newStage.value);
+        updateStage(newStage.value, id);
         return 'shipped';
     }
 }
@@ -90,13 +91,16 @@ const goBack = () => {
     //go back to home page
     router.push('/home');
 }
-const removeShoe = () => {
+const removeShoe = (id) => {
     fetch(fetchurl, {
         method: 'DELETE',
         headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer " + localStorage.getItem('token'),
         },
+        body: JSON.stringify({
+            id: id
+        })
     })
         .then(response => response.json())
         .then(data => {
@@ -166,13 +170,13 @@ const removeShoe = () => {
                 <li>{{ data.state }}</li>
                 <li>{{ data.country }}</li>
                 <li>
-                    <div class="btn--medium btn--primary" @click="previousStage(data.status)">Previous order stage</div>
+                    <div class="btn--medium btn--primary" @click="previousStage(data.status, data._id)">Previous order stage</div>
                 </li>
                 <li>
-                    <div class="btn--medium btn--primary" @click="nextStage(data.status)">Next order stage</div>
+                    <div class="btn--medium btn--primary" @click="nextStage(data.status, data._id)">Next order stage</div>
                 </li>
                 <li>
-                    <div class="btn--medium btn--primary btn--red" @click="removeShoe()">Remove shoe</div>
+                    <div class="btn--medium btn--primary btn--red" @click="removeShoe(data._id)">Remove shoe</div>
                 </li>
                 <li>
                     <p>{{ update }}</p>

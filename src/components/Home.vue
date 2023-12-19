@@ -118,6 +118,7 @@ const removeShoe = (shoeid) => {
         .catch((error) => {
             console.error('Error:', error);
         });
+
 }
 </script>
 <template>
@@ -126,6 +127,7 @@ const removeShoe = (shoeid) => {
   <table>
     <ul class="table" v-for="shoe in data">
       <li class="table__row" v-if="shoe.status === 'pending'">
+        {{console.log(shoe)}}
         <div class="table__row__item">
           {{shoe.orderNumber}}
         </div>
@@ -162,7 +164,7 @@ const removeShoe = (shoeid) => {
         </div>
         <a class="btn btn--small btn--blue btn__link " @click="previousStage(shoe.status, shoe._id)">Previous Stage</a>
         <a class="btn btn--small btn--blue btn__link" @click="nextStage(shoe.status, shoe._id)">Next stage</a>
-        <a class="btn btn--small btn--primary btn__link" :href="'Shoe?id=' + orderNumber">View</a>
+        <a class="btn btn--small btn--primary btn__link" :href="'Shoe?id=' + shoe.orderNumber">View</a>
       </li>
     </ul>
   </table>
@@ -184,7 +186,7 @@ const removeShoe = (shoeid) => {
         </div>
         <a class="btn btn--small btn--blue btn__link " @click="previousStage(shoe.status, shoe._id)">Previous Stage</a>
         <a class="btn btn--small btn--blue btn__link" @click="nextStage(shoe.status, shoe._id)">Next stage</a>
-        <a class="btn btn--small btn--primary btn__link" :href="'Shoe?id=' + orderNumber">View</a>
+        <a class="btn btn--small btn--primary btn__link" :href="'Shoe?id=' + shoe.orderNumber">View</a>
       </li>
     </ul>
   </table>

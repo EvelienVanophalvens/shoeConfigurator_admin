@@ -25,6 +25,15 @@ onMounted(() => {
     //make counter the count of the array
     counter.value++;
   }
+  if(newShoe.action === "update"){
+    console.log(newShoe); 
+    let shoe= data.value.find(shoe => shoe._id === newShoe.id);
+    if (shoe) {
+      // Update the status of the shoe
+      shoe.status = newShoe.status;
+      console.log("update", newShoe);
+    }
+  }
   if (newShoe === 'ping'){
     if (socket.readyState === WebSocket.OPEN) {
     socket.send('pong');
@@ -54,6 +63,11 @@ fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
 let newStage = ref("");
 let update = ref("");
 const updateStage = (newStage, shoeid) => {
+  socket.send(JSON.stringify({
+      id: shoeid,
+      status: newStage,
+      action: 'update'
+    }));
     const fetchurl = "https://shoeconfigurator.onrender.com/api/v1/shoes/" + shoeid;
     //put new stage through api
     fetch(fetchurl, {

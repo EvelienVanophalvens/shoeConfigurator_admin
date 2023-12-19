@@ -16,7 +16,7 @@
 <template>
     <div class="nav">
         <div class="logo">
-            <img class="logo__img" src="../assets/SWEAR_logo.png" alt="logo" />
+            <img class="logo__img" src="../assets/SWEAR_Logo.png" alt="logo" />
         </div>
         <div class="btnGroup">
                 <button class="btnGroup__btn btn--small btn--primary" @click="changePassword">Change password</button>

@@ -19,19 +19,17 @@ onMounted(() => {
   socket.onmessage = (event) => {
   //push new data to data.value
   let newShoe = JSON.parse(event.data);
-  if(newShoe.status === 'pending'){
+  if(newShoe.action === 'create'){
     data.value.push(newShoe);
     console.log("pending" + data.value);
     //make counter the count of the array
     counter.value++;
   }
   if(newShoe.action === "update"){
-    console.log(newShoe); 
     let shoe= data.value.find(shoe => shoe._id === newShoe.id);
     if (shoe) {
       // Update the status of the shoe
       shoe.status = newShoe.status;
-      console.log("update", newShoe);
     }
   }
   if (newShoe === 'ping'){
@@ -88,7 +86,6 @@ const updateStage = (newStage, shoeid) => {
             update.value = "Order updated to: " + newStage;
             console.log(data);
             console.log(update.value);
-            location.reload();
         })
         .catch(err => {
             console.log(err);

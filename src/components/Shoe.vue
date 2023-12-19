@@ -17,6 +17,7 @@ fetch(fetchurl, {
     return result.json();
 }).then((json) => {
     data.value = json.data[0].shoe;
+    console.log(data.value);
 }).catch((err) => {
     console.log(err);
 });
@@ -31,8 +32,9 @@ const formatDate = (dateString) => {
     return `${day}-${month}-${year} - ${hours}:${minutes}`;
 }
 const updateStage = (newStage, id) => {
+    const fetchurl2 = "https://shoeconfigurator.onrender.com/api/v1/shoes/" + id;
     //put new stage through api
-    fetch(fetchurl, {
+    fetch(fetchurl2, {
         method: 'PATCH',
         headers: {
             "Content-Type": "application/json",

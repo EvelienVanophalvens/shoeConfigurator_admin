@@ -38,11 +38,11 @@ const login = () => {
                 <p class="message message--error"></p>
                 <div class="input">
                     <label class="input__label" for="email">Email</label>
-                    <input class="input__field" autocapitalize="off" autocorrect="off" type="email" id="email" required/>
+                    <input class="input__field" autocapitalize="off" autocorrect="off" type="email" id="email" name="email" required/>
                 </div>
                 <div class="input">
                     <label class="input__label" for="password">Password</label>
-                    <input class="input__field" autocapitalize="off" autocorrect="off" type="password" id="password" required />
+                    <input class="input__field" autocapitalize="off" autocorrect="off" type="password" id="password" name="password" required />
                 </div>
                 <div class="input input--btn">
                     <button type="submit" class="btn btn--small btn--primary">Login</button>

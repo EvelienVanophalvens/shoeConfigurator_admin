@@ -11,6 +11,7 @@
 body{
   margin: 0px;
   font-family: Arial, Helvetica, sans-serif;
+  color: white;
 }
 .btn:hover{
   cursor: pointer;

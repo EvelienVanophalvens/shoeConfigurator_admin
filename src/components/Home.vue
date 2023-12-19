@@ -5,6 +5,10 @@ const router = useRouter()
 const data = ref([]);
 let socket = ref(null);
 
+let counter = ref(0);
+
+
+
 onMounted(() => {
   socket = new WebSocket('wss://shoeconfigurator.onrender.com/primus');
   socket.addEventListener('open', function (event) {
@@ -15,14 +19,22 @@ onMounted(() => {
   socket.onmessage = (event) => {
   //push new data to data.value
   let newShoe = JSON.parse(event.data);
-  data.value.push(newShoe);
+  if(newShoe.status === 'pending'){
+    data.value.push(newShoe);
+    console.log("pending" + data.value);
+    //make counter the count of the array
+    counter.value++;
+  }
   if (newShoe === 'ping'){
     if (socket.readyState === WebSocket.OPEN) {
     socket.send('pong');
   }
+  
   }
   }
 });
+
+
 fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
   headers: {
     "Authorization": "Bearer " + localStorage.getItem('token'),
@@ -32,6 +44,8 @@ fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
 }).then((json) => {
     console.log(json)
     data.value = json.data[0].shoes;
+    // Update counter here
+    counter.value = data.value.length;
 }).catch((err) => {
     router.push('/');
 });
@@ -114,106 +128,135 @@ const removeShoe = (shoeid) => {
         .catch((error) => {
             console.error('Error:', error);
         });
+
 }
+
+watch(data, () => {
+  console.log(counter.value);
+})
+
+watch(counter, () => {
+  console.log(counter.value);
+})
+
 </script>
 <template>
-  <div class="body">
-    <h1>Orders</h1>
-    <h2>Pending</h2>
-    <table>
-      <ul class="table" v-for="shoe in data">
-        <li class="table__row" v-if="shoe.status === 'pending'">
-          <div class="table__row__item">
-            {{shoe.orderNumber}}
-          </div>
-          <div class="table__row__item">
-            {{shoe.firstName}}
-          </div>
-          <div class="table__row__item">
-            {{shoe.shoeName}}
-          </div>
-          <div class="table__row__item">
-            {{shoe.shoeSize}}
-          </div>
-          <a class="btn btn--small btn--red btn__link " @click="removeShoe(shoe._id)">Cancel order</a>
-          <a class="btn btn--small btn--blue btn__link" @click="nextStage(shoe.status, shoe._id)">Next stage</a>
-          <a class="btn btn--small btn--primary btn__link" :href="'Shoe?id=' + shoe._id">View</a>
-        </li>
-      </ul>
-    </table>
-    <h2>Processing</h2>
-    <table>
-      <ul class="table" v-for="shoe in data">
-        <li class="table__row" v-if="shoe.status === 'processing'">
-          <div class="table__row__item">
-            {{shoe.orderNumber}}
-          </div>
-          <div class="table__row__item">
-            {{shoe.firstName}}
-          </div>
-          <div class="table__row__item">
-            {{shoe.shoeName}}
-          </div>
-          <div class="table__row__item">
-            {{shoe.shoeSize}}
-          </div>
-          <a class="btn btn--small btn--blue btn__link " @click="previousStage(shoe.status, shoe._id)">Previous Stage</a>
-          <a class="btn btn--small btn--blue btn__link" @click="nextStage(shoe.status, shoe._id)">Next stage</a>
-          <a class="btn btn--small btn--primary btn__link" :href="'Shoe?id=' + shoe._id">View</a>
-        </li>
-      </ul>
-    </table>
-    <h2>Shipped</h2>
-    <table>
-      <ul class="table" v-for="shoe in data">
-        <li class="table__row" v-if="shoe.status === 'shipped'">
-          <div class="table__row__item">
-            {{shoe.orderNumber}}
-          </div>
-          <div class="table__row__item">
-            {{shoe.firstName}}
-          </div>
-          <div class="table__row__item">
-            {{shoe.shoeName}}
-          </div>
-          <div class="table__row__item">
-            {{shoe.shoeSize}}
-          </div>
-          <a class="btn btn--small btn--blue btn__link " @click="previousStage(shoe.status, shoe._id)">Previous Stage</a>
-          <a class="btn btn--small btn--blue btn__link" @click="nextStage(shoe.status, shoe._id)">Next stage</a>
-          <a class="btn btn--small btn--primary btn__link" :href="'Shoe?id=' + shoe._id">View</a>
-        </li>
-      </ul>
-    </table>
-    <h2>Delivered</h2>
-    <table>
-      <ul class="table" v-for="shoe in data">
-        <li class="table__row" v-if="shoe.status === 'delivered'">
-          <div class="table__row__item">
-            {{shoe.orderNumber}}
-          </div>
-          <div class="table__row__item">
-            {{shoe.firstName}}
-          </div>
-          <div class="table__row__item">
-            {{shoe.shoeName}}
-          </div>
-          <div class="table__row__item">
-            {{shoe.shoeSize}}
-          </div>
-          <a class="btn btn--small btn--blue btn__link " @click="previousStage(shoe.status, shoe._id)">Previous Stage</a>
-          <a class="btn btn--small btn--blue btn__link" @click="nextStage(shoe.status, shoe._id)">Next stage</a>
-          <a class="btn btn--small btn--primary btn__link" :href="'Shoe?id=' + shoe._id">View</a>
-        </li>
-      </ul>
-    </table>
+  <div class="container container--full">
+    <h1 class="container__item container__item--noBorder">Orders</h1>
+    <h1 class="container__item container__item--noBorder">{{counter}}</h1>
   </div>
+  <h2>Pending</h2>
+  <table>
+    <ul class="table" v-for="shoe in data">
+      <li class="table__row" v-if="shoe.status === 'pending'">
+        <div class="table__row__item">
+          {{shoe.orderNumber}}
+        </div>
+        <div class="table__row__item">
+          {{shoe.firstName}}
+        </div>
+        <div class="table__row__item">
+          {{shoe.shoeName}}
+        </div>
+        <div class="table__row__item">
+          {{shoe.shoeSize}}
+        </div>
+        <a class="btn btn--small btn--red btn__link " @click="removeShoe(shoe._id)">Cancel order</a>
+        <a class="btn btn--small btn--blue btn__link" @click="nextStage(shoe.status, shoe._id)">Next stage</a>
+        <a class="btn btn--small btn--primary btn__link" :href="'Shoe?id=' + shoe.orderNumber">View</a>
+      </li>
+    </ul>
+  </table>
+  <h2>Processing</h2>
+  <table>
+    <ul class="table" v-for="shoe in data">
+      <li class="table__row" v-if="shoe.status === 'processing'">
+        <div class="table__row__item">
+          {{shoe.orderNumber}}
+        </div>
+        <div class="table__row__item">
+          {{shoe.firstName}}
+        </div>
+        <div class="table__row__item">
+          {{shoe.shoeName}}
+        </div>
+        <div class="table__row__item">
+          {{shoe.shoeSize}}
+        </div>
+        <a class="btn btn--small btn--blue btn__link " @click="previousStage(shoe.status, shoe._id)">Previous Stage</a>
+        <a class="btn btn--small btn--blue btn__link" @click="nextStage(shoe.status, shoe._id)">Next stage</a>
+        <a class="btn btn--small btn--primary btn__link" :href="'Shoe?id=' + shoe.orderNumber">View</a>
+      </li>
+    </ul>
+  </table>
+  <h2>Shipped</h2>
+  <table>
+    <ul class="table" v-for="shoe in data">
+      <li class="table__row" v-if="shoe.status === 'shipped'">
+        <div class="table__row__item">
+          {{shoe.orderNumber}}
+        </div>
+        <div class="table__row__item">
+          {{shoe.firstName}}
+        </div>
+        <div class="table__row__item">
+          {{shoe.shoeName}}
+        </div>
+        <div class="table__row__item">
+          {{shoe.shoeSize}}
+        </div>
+        <a class="btn btn--small btn--blue btn__link " @click="previousStage(shoe.status, shoe._id)">Previous Stage</a>
+        <a class="btn btn--small btn--blue btn__link" @click="nextStage(shoe.status, shoe._id)">Next stage</a>
+        <a class="btn btn--small btn--primary btn__link" :href="'Shoe?id=' + shoe.orderNumber">View</a>
+      </li>
+    </ul>
+  </table>
+  <h2>Delivered</h2>
+  <table>
+    <ul class="table" v-for="shoe in data">
+      <li class="table__row" v-if="shoe.status === 'delivered'">
+        <div class="table__row__item">
+          {{shoe.orderNumber}}
+        </div>
+        <div class="table__row__item">
+          {{shoe.firstName}}
+        </div>
+        <div class="table__row__item">
+          {{shoe.shoeName}}
+        </div>
+        <div class="table__row__item">
+          {{shoe.shoeSize}}
+        </div>
+        <a class="btn btn--small btn--blue btn__link " @click="previousStage(shoe.status, shoe._id)">Previous Stage</a>
+        <a class="btn btn--small btn--blue btn__link" @click="nextStage(shoe.status, shoe._id)">Next stage</a>
+        <a class="btn btn--small btn--primary btn__link" :href="'Shoe?id=' + shoe.orderNumber">View</a>
+      </li>
+    </ul>
+  </table>
 </template>
 <style scoped>
-    div.body{
-      background-color: var(--offblack-color);
-      color: white;
+    .container{
+        width: 90%;
+        margin: 64px auto 64px auto ;
+        padding: 0;
+        display: grid;
+        grid-column-gap: 10%;
+        grid-row-gap: 10px;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 45%));
     }
+
+    .container--full{
+      width: 100%;
+    }
+
+    .container__item{
+        border: 1px solid black;
+        padding: 16px;
+    }
+    .container__item--noBorder{
+      border: none;
+    }
+
     table{
         width: 90%;
         margin-top: 0;

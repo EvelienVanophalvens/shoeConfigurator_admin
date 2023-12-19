@@ -3,6 +3,7 @@ import { useRouter } from 'vue-router'
 import { ref } from 'vue'
 
 const data = ref([]);
+
 const urlParams = new URLSearchParams(window.location.search);
 const router = useRouter()
 let newStage = ref("");
@@ -29,7 +30,7 @@ const formatDate = (dateString) => {
 
     return `${day}-${month}-${year} - ${hours}:${minutes}`;
 }
-const updateStage = (newStage) => {
+const updateStage = (newStage, id) => {
     //put new stage through api
     fetch(fetchurl, {
         method: 'PATCH',
@@ -38,6 +39,7 @@ const updateStage = (newStage) => {
             "Authorization": "Bearer " + localStorage.getItem('token'),
         },
         body: JSON.stringify({
+            id: id,
             status: newStage
         })
     })
@@ -56,33 +58,33 @@ const updateStage = (newStage) => {
             update.value = "Something went wrong";
         })
 }
-const nextStage = (currentstage) => {
+const nextStage = (currentstage, id) => {
     if (currentstage === 'pending') {
         newStage.value = 'processing';
-        updateStage(newStage.value);
+        updateStage(newStage.value, id);
         return 'processing';
     } else if (currentstage === 'processing') {
         newStage.value = 'shipped';
-        updateStage(newStage.value);
+        updateStage(newStage.value, id);
         return 'shipped';
     } else if (currentstage === 'shipped') {
         newStage.value = 'delivered';
-        updateStage(newStage.value);
+        updateStage(newStage.value, id);
         return 'delivered';
     }
 }
-const previousStage = (currentstage) => {
+const previousStage = (currentstage, id) => {
     if (currentstage === 'processing') {
         newStage.value = 'pending';
-        updateStage(newStage.value);
+        updateStage(newStage.value, id);
         return 'pending';
     } else if (currentstage === 'shipped') {
         newStage.value = 'processing';
-        updateStage(newStage.value);
+        updateStage(newStage.value, id);
         return 'processing';
     } else if (currentstage === 'delivered') {
         newStage.value = 'shipped';
-        updateStage(newStage.value);
+        updateStage(newStage.value, id);
         return 'shipped';
     }
 }
@@ -90,13 +92,16 @@ const goBack = () => {
     //go back to home page
     router.push('/home');
 }
-const removeShoe = () => {
+const removeShoe = (id) => {
     fetch(fetchurl, {
         method: 'DELETE',
         headers: {
             "Content-Type": "application/json",
             "Authorization": "Bearer " + localStorage.getItem('token'),
         },
+        body: JSON.stringify({
+            id: id
+        })
     })
         .then(response => response.json())
         .then(data => {
@@ -109,83 +114,78 @@ const removeShoe = () => {
             console.error('Error:', error);
         });
 }
+
+
+
 </script>
 <template>
-    <div class="body">
-        <svg @click="goBack" class="icon icon--closeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
-        <div class="container">
-            <div class="container__item">
-                <h1>{{ data.shoeName }}</h1>
-                <h2>Size: {{ data.shoeSize }}</h2>
-                <p>Material: {{ data.innerMaterial }}</p>
-                <h3>Colors:</h3>
-                <ul class="container__item__list">
-                    <div class="container__item__list__item">
-                        <p>Laces: </p>
-                        <div class="colorbox" :style="{ backgroundColor: '#' + data.colorLaces }"></div>
-                        <p>#{{ data.colorLaces }}</p>
-                    </div>
-                    <div class="container__item__list__item">
-                        <p>Inner Material: </p>
-                        <div class="colorbox" :style="{ backgroundColor: '#' + data.colorInnerMaterial }"></div>
-                        <p>#{{ data.colorInnerMaterial }}</p>
-                    </div>
-                    <div class="container__item__list__item">
-                        <p>Mid Material: </p>
-                        <div class="colorbox" :style="{ backgroundColor: '#' + data.colorMidMaterial }"></div>
-                        <p>#{{ data.colorMidMaterial }}</p>
-                    </div>
-                    <div class="container__item__list__item">
-                        <p>Outer Material: </p>
-                        <div class="colorbox" :style="{ backgroundColor: '#' + data.colorOuterMaterial }"></div>
-                        <p>#{{ data.colorOuterMaterial }}</p>
-                    </div>
-                    <div class="container__item__list__item">
-                        <p>Midsole: </p>
-                        <div class="colorbox" :style="{ backgroundColor: '#' + data.colorMidsole }"></div>
-                        <p>#{{ data.colorMidsole }}</p>
-                    </div>
-                    <div class="container__item__list__item">
-                        <p>Outsole: </p>
-                        <div class="colorbox" :style="{ backgroundColor: '#' + data.colorOutsole }"></div>
-                        <p>#{{ data.colorOutsole }}</p>
-                    </div>
-                </ul>
-            </div>
-            <div class="container__item">
-                <h2>{{ data.firstName }} {{ data.lastName }}</h2>
-                <ul class="container__item__list grid">
-                    <li>Email:</li>
-                    <li>{{ data.email }}</li>
-                    <li>Phone number:</li>
-                    <li>{{ data.phoneNumber }}</li>
-                    <li>Order number:</li>
-                    <li>{{ data.orderNumber }}</li>
-                    <li>Order date:</li>
-                    <li>{{ formatDate(data.orderDate) }}</li>
-                    <li>Order Status:</li>
-                    <li>{{ data.status }}</li>
-                    <div class="spacer"></div>
-                </ul>
-                <ul class="container__item__list">
-                    <li>{{ data.street }} {{ data.houseNumber }}</li>
-                    <li>{{ data.zipCode }} {{ data.city }}</li>
-                    <li>{{ data.state }}</li>
-                    <li>{{ data.country }}</li>
-                    <li>
-                        <div class="btn--medium btn--blue" @click="previousStage(data.status)">Previous order stage</div>
-                    </li>
-                    <li>
-                        <div class="btn--medium btn--blue" @click="nextStage(data.status)">Next order stage</div>
-                    </li>
-                    <li>
-                        <div class="btn--medium btn--primary btn--red" @click="removeShoe()">Remove shoe</div>
-                    </li>
-                    <li>
-                        <p>{{ update }}</p>
-                    </li>
-                </ul>
-            </div>
+    <svg @click="goBack" class="icon icon--closeIcon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/></svg>
+    <div class="container">
+        <div class="container__item">
+            <h1>{{ data.shoeName}}</h1>
+            <h2>Size: {{ data.shoeSize  }}</h2>
+            <p>Material: {{ data.innerMaterial }}</p>
+            <h3>Colors:</h3>
+            <ul class="container__item__list">
+                <div class="container__item__list__item">
+                    <p>Laces: </p>
+                    <div class="colorbox" :style="{ backgroundColor: '#' + data.colorLaces }"></div>
+                    <p>#{{ data.colorLaces }}</p>
+                </div>
+                <div class="container__item__list__item">
+                    <p>Inner Material: </p>
+                    <div class="colorbox" :style="{ backgroundColor: '#' + data.colorInnerMaterial }"></div>
+                    <p>#{{ data.colorInnerMaterial }}</p>
+                </div>
+                <div class="container__item__list__item">
+                    <p>Mid Material: </p>
+                    <div class="colorbox" :style="{ backgroundColor: '#' + data.colorMidMaterial }"></div>
+                    <p>#{{ data.colorMidMaterial }}</p>
+                </div>
+                <div class="container__item__list__item">
+                    <p>Outer Material: </p>
+                    <div class="colorbox" :style="{ backgroundColor: '#' + data.colorOuterMaterial }"></div>
+                    <p>#{{ data.colorOuterMaterial }}</p>
+                </div>
+                <div class="container__item__list__item">
+                    <p>Midsole: </p>
+                    <div class="colorbox" :style="{ backgroundColor: '#' + data.colorMidsole }"></div>
+                    <p>#{{ data.colorMidsole }}</p>
+                </div>
+                <div class="container__item__list__item">
+                    <p>Outsole: </p>
+                    <div class="colorbox" :style="{ backgroundColor: '#' + data.colorOutsole }"></div>
+                    <p>#{{ data.colorOutsole }}</p>
+                </div>
+            </ul>
+        </div>
+        <div class="container__item">
+            <h2>{{ data.firstName }} {{ data.lastName }}</h2>
+            <ul class="container__item__list">
+                <li>Email: {{ data.email }}</li>
+                <li>Phone number: {{ data.phoneNumber }}</li>
+                <li>Order number: {{ data.orderNumber }}</li>
+                <li>Order date: {{ formatDate(data.orderDate) }}</li>
+                <li>Order Status: {{ data.status }}</li>
+                <div class="spacer"></div>
+                <li>{{ data.street }} {{ data.houseNumber }}</li>
+                <li>{{ data.zipCode }}</li>
+                <li>{{ data.city }}</li>
+                <li>{{ data.state }}</li>
+                <li>{{ data.country }}</li>
+                <li>
+                    <div class="btn--medium btn--primary" @click="previousStage(data.status, data._id)">Previous order stage</div>
+                </li>
+                <li>
+                    <div class="btn--medium btn--primary" @click="nextStage(data.status, data._id)">Next order stage</div>
+                </li>
+                <li>
+                    <div class="btn--medium btn--primary btn--red" @click="removeShoe(data._id)">Remove shoe</div>
+                </li>
+                <li>
+                    <p>{{ update }}</p>
+                </li>
+            </ul>
         </div>
     </div>
 </template>

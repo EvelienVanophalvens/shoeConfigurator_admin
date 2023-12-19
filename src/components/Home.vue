@@ -5,6 +5,10 @@ const router = useRouter()
 const data = ref([]);
 let socket = ref(null);
 
+let counter = ref(0);
+
+
+
 onMounted(() => {
   socket = new WebSocket('wss://shoeconfigurator.onrender.com/primus');
   socket.addEventListener('open', function (event) {
@@ -18,6 +22,8 @@ onMounted(() => {
   if(newShoe.status === 'pending'){
     data.value.push(newShoe);
     console.log("pending" + data.value);
+    //make counter the count of the array
+    counter.value++;
   }
   if (newShoe === 'ping'){
     if (socket.readyState === WebSocket.OPEN) {
@@ -27,6 +33,8 @@ onMounted(() => {
   }
   }
 });
+
+
 fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
   headers: {
     "Authorization": "Bearer " + localStorage.getItem('token'),
@@ -36,6 +44,8 @@ fetch("https://shoeconfigurator.onrender.com/api/v1/shoes", {
 }).then((json) => {
     console.log(json)
     data.value = json.data[0].shoes;
+    // Update counter here
+    counter.value = data.value.length;
 }).catch((err) => {
     router.push('/');
 });
@@ -120,14 +130,23 @@ const removeShoe = (shoeid) => {
         });
 
 }
+
+watch(data, () => {
+  console.log(counter.value);
+})
+
+watch(counter, () => {
+  console.log(counter.value);
+})
+
 </script>
 <template>
   <h1>Orders</h1>
   <h2>Pending</h2>
+  <p>{{counter}}</p>
   <table>
     <ul class="table" v-for="shoe in data">
       <li class="table__row" v-if="shoe.status === 'pending'">
-        {{console.log(shoe)}}
         <div class="table__row__item">
           {{shoe.orderNumber}}
         </div>

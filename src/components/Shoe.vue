@@ -182,7 +182,7 @@ const removeShoe = (id) => {
                     <div class="btn--medium btn--primary" @click="nextStage(data.status, data._id)">Next order stage</div>
                 </li>
                 <li>
-                    <div class="btn--medium btn--primary btn--red" @click="removeShoe(data._id)">Remove shoe</div>
+                    <div class="btn--medium btn--primary btn--red" @click="removeShoe(data._id)">Remove shoe {{console.log(data._id)}}</div>
                 </li>
                 <li>
                     <p>{{ update }}</p>

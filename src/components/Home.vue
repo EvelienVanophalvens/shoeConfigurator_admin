@@ -162,6 +162,7 @@ watch(counter, () => {
   console.log(counter.value);
 })
 
+
 </script>
 <template>
   <div class="container container--full">
@@ -208,7 +209,7 @@ watch(counter, () => {
         </div>
         <a class="btn btn--small btn--blue btn__link " @click="previousStage(shoe.status, shoe._id)">Previous Stage</a>
         <a class="btn btn--small btn--blue btn__link" @click="nextStage(shoe.status, shoe._id)">Next stage</a>
-        <a class="btn btn--small btn--primary btn__link" :href="'Shoe?id=' + shoe.orderNumber">View</a>
+        <a class="btn btn--small btn--primary btn__link" @click="detail(shoe.orderNumber)">View</a>
       </li>
     </ul>
   </table>
@@ -230,7 +231,7 @@ watch(counter, () => {
         </div>
         <a class="btn btn--small btn--blue btn__link " @click="previousStage(shoe.status, shoe._id)">Previous Stage</a>
         <a class="btn btn--small btn--blue btn__link" @click="nextStage(shoe.status, shoe._id)">Next stage</a>
-        <a class="btn btn--small btn--primary btn__link" :href="'Shoe?id=' + shoe.orderNumber">View</a>
+        <a class="btn btn--small btn--primary btn__link" @click="detail(shoe.orderNumber)">View</a>
       </li>
     </ul>
   </table>
@@ -252,7 +253,7 @@ watch(counter, () => {
         </div>
         <a class="btn btn--small btn--gray btn__link">Delivered</a>
         <a class="btn btn--small btn--blue btn__link " @click="previousStage(shoe.status, shoe._id)">Previous Stage</a>
-        <a class="btn btn--small btn--primary btn__link" :href="'Shoe?id=' + shoe.orderNumber">View</a>
+        <a class="btn btn--small btn--primary btn__link" @click="detail(shoe.orderNumber)">View</a>
       </li>
     </ul>
   </table>

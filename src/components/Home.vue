@@ -122,26 +122,6 @@ const previousStage = (currentstage, shoeid) => {
         return 'shipped';
     }
 }
-const removeShoe = (shoeid) => {
-    const fetchurl = "https://shoeconfigurator.onrender.com/api/v1/shoes/" + shoeid;
-    fetch(fetchurl, {
-        method: 'DELETE',
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + localStorage.getItem('token'),
-        },
-    })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-        })
-        .then(() => {
-          location.reload();
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-}
 
 watch(data, () => {
   console.log(counter.value);
@@ -185,7 +165,6 @@ watch(counter, () => {
         <div class="table__row__item">
           {{shoe.shoeSize}}
         </div>
-        <a class="btn btn--small btn--red btn__link " @click="removeShoe(shoe._id)">Cancel order</a>
         <a class="btn btn--small btn--blue btn__link" @click="nextStage(shoe.status, shoe._id)">Next stage</a>
         <a class="btn btn--small btn--primary btn__link" @click="detail(shoe.orderNumber)">View</a>
       </li>

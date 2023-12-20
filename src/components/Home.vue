@@ -176,7 +176,7 @@ watch(counter, () => {
         </div>
         <a class="btn btn--small btn--red btn__link " @click="removeShoe(shoe._id)">Cancel order</a>
         <a class="btn btn--small btn--blue btn__link" @click="nextStage(shoe.status, shoe._id)">Next stage</a>
-        <a class="btn btn--small btn--primary btn__link" :href="'Shoe?id=' + shoe.orderNumber">View</a>
+        <a class="btn btn--small btn--primary btn__link" :href="'shoe?id=' + shoe.orderNumber">View</a>
       </li>
     </ul>
   </table>

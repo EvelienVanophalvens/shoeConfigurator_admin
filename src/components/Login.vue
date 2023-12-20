@@ -28,13 +28,17 @@ const login = () => {
        }
     })
 }
+
+const singup = () => {
+    router.push('/signup');
+}
 </script>
 <template>
     <div class="body">
         <div class="formwrapper">
             <form @submit.prevent="login" class="form">
                 <h1>Login</h1>
-                <p>Don't have an account? <a href="/signup">Sign up</a></p>
+                <p>Don't have an account? <a @click=singup()>Sign up</a></p>
                 <p class="message message--error"></p>
                 <div class="input">
                     <label class="input__label" for="email">Email</label>

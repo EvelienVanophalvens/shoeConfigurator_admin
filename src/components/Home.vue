@@ -141,7 +141,6 @@ const removeShoe = (shoeid) => {
         .catch((error) => {
             console.error('Error:', error);
         });
-
 }
 
 watch(data, () => {
@@ -154,6 +153,15 @@ watch(counter, () => {
 const detail = (orderNumber) => {
   router.push('/shoe?id=' + orderNumber);
 }
+
+watch(data, () => {
+  console.log(counter.value);
+})
+
+watch(counter, () => {
+  console.log(counter.value);
+})
+
 </script>
 <template>
   <div class="container container--full">
@@ -242,8 +250,8 @@ const detail = (orderNumber) => {
         <div class="table__row__item">
           {{shoe.shoeSize}}
         </div>
+        <a class="btn btn--small btn--gray btn__link">Delivered</a>
         <a class="btn btn--small btn--blue btn__link " @click="previousStage(shoe.status, shoe._id)">Previous Stage</a>
-        <a class="btn btn--small btn--blue btn__link" @click="nextStage(shoe.status, shoe._id)">Next stage</a>
         <a class="btn btn--small btn--primary btn__link" :href="'Shoe?id=' + shoe.orderNumber">View</a>
       </li>
     </ul>
@@ -344,6 +352,14 @@ const detail = (orderNumber) => {
     .btn--blue:hover{
         background-color: var(--blue-color-hover);
         cursor: pointer;
+        color: white;
+    }
+    .btn--gray{
+        background-color: var(--gray-color);
+        color: white;
+    }
+    .btn--gray:hover{
+        cursor: unset;
         color: white;
     }
     @media screen and (max-width: 930px){
